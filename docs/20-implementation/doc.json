@@ -1,0 +1,283 @@
+{
+  "schemaVersion": 1,
+  "id": "20-implementation-00-overview",
+  "title": "Implementation",
+  "root": "b-00-overview-root-14",
+  "blocks": {
+    "b-00-overview-root-14": {
+      "id": "b-00-overview-root-14",
+      "type": "paragraph",
+      "props": {
+        "concepts": [
+          "implementation",
+          "exporter",
+          "validation",
+          "setup"
+        ],
+        "covers": "How the WisprSync codebase implements setup, export, validation, and repo-local data operations.",
+        "design_refs": [
+          "10-system-design/10-data-structure/20-wisprsync-output-shape.md",
+          "10-system-design/20-exporting/10-folder-export.md"
+        ],
+        "type": "overview"
+      },
+      "children": [
+        "b-00-overview-the-implementation-layer-2",
+        "b-00-overview-divider-3",
+        "b-00-overview-file-tree-4",
+        "b-00-overview-text-5",
+        "b-00-overview-architecture-6",
+        "b-00-overview-repo-local-commands-in-7",
+        "b-00-overview-the-current-implementati-8",
+        "b-00-overview-sections-9",
+        "b-00-overview-export-pipeline-10-exp-10",
+        "b-00-overview-documents-how-source-row-11",
+        "b-00-overview-appendix-99-appendix-0-12",
+        "b-00-overview-documents-operational-se-13"
+      ]
+    },
+    "b-00-overview-the-implementation-layer-2": {
+      "id": "b-00-overview-the-implementation-layer-2",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The implementation layer maps the design contracts onto the current Python package and repo-local shell commands. Use it when changing how WisprSync discovers the source database, exports records, writes indexes, records run reports, or validates the "
+        },
+        {
+          "insert": "data/",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " folder."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-divider-3": {
+      "id": "b-00-overview-divider-3",
+      "type": "divider",
+      "props": {},
+      "children": []
+    },
+    "b-00-overview-file-tree-4": {
+      "id": "b-00-overview-file-tree-4",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "File Tree"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-text-5": {
+      "id": "b-00-overview-text-5",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": "20-implementation/              (this page)\n├── 10-export-pipeline/         Source reading, record writing, indexing, and validation\n└── 99-appendix/                Operational setup and repo-local command docs"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-architecture-6": {
+      "id": "b-00-overview-architecture-6",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Architecture"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-repo-local-commands-in-7": {
+      "id": "b-00-overview-repo-local-commands-in-7",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Repo-local commands in "
+        },
+        {
+          "insert": "bin/",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " call "
+        },
+        {
+          "insert": "python3 -m wisprsync",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": ". The CLI layer resolves commands and options, the command layer resolves config, the export runner snapshots or reads the source SQLite database, and the record helpers normalize each "
+        },
+        {
+          "insert": "History",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " row into metadata, files, indexes, and run reports."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-the-current-implementati-8": {
+      "id": "b-00-overview-the-current-implementati-8",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The current implementation is split into package sections: "
+        },
+        {
+          "insert": "wisprsync/cli/",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " for command parsing and command functions, "
+        },
+        {
+          "insert": "wisprsync/core/",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " for config/constants/path/error primitives, "
+        },
+        {
+          "insert": "wisprsync/source/",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " for discovery and SQLite access, "
+        },
+        {
+          "insert": "wisprsync/export/",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " for export orchestration and record/index helpers, "
+        },
+        {
+          "insert": "wisprsync/support/",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " for shared filesystem/hash/JSON/time helpers, and "
+        },
+        {
+          "insert": "wisprsync/validate/",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " for data-folder checks."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-sections-9": {
+      "id": "b-00-overview-sections-9",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Sections"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-export-pipeline-10-exp-10": {
+      "id": "b-00-overview-export-pipeline-10-exp-10",
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "text": [
+        {
+          "insert": "Export Pipeline",
+          "attributes": {
+            "reference": {
+              "kind": "doc",
+              "path": "20-implementation/10-export-pipeline",
+              "label": "Export Pipeline"
+            }
+          }
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-documents-how-source-row-11": {
+      "id": "b-00-overview-documents-how-source-row-11",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Documents how source rows become record directories, JSON metadata, JSONL indexes, manifests, and run reports."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-appendix-99-appendix-0-12": {
+      "id": "b-00-overview-appendix-99-appendix-0-12",
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "text": [
+        {
+          "insert": "Appendix",
+          "attributes": {
+            "reference": {
+              "kind": "doc",
+              "path": "20-implementation/99-appendix",
+              "label": "Appendix"
+            }
+          }
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-documents-operational-se-13": {
+      "id": "b-00-overview-documents-operational-se-13",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Documents operational setup, local configuration, source discovery, and repo-local command expectations."
+        }
+      ],
+      "children": []
+    }
+  }
+}

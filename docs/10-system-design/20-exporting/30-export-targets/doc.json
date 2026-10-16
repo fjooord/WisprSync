@@ -1,0 +1,405 @@
+{
+  "schemaVersion": 1,
+  "id": "10-system-design-20-exporting-30-export-targets",
+  "title": "Future Export Targets",
+  "root": "b-30-export-targets-root-27",
+  "blocks": {
+    "b-30-export-targets-root-27": {
+      "id": "b-30-export-targets-root-27",
+      "type": "paragraph",
+      "props": {
+        "concepts": [
+          "export-targets",
+          "extensibility",
+          "remote-sync"
+        ],
+        "covers": "Future extension ideas beyond the default folder export.",
+        "depends-on": [
+          "10-system-design/20-exporting/10-folder-export.md"
+        ]
+      },
+      "children": [
+        "b-30-export-targets-wisprsync-does-not-curre-2",
+        "b-30-export-targets-future-export-targets-sh-3",
+        "b-30-export-targets-divider-4",
+        "b-30-export-targets-target-model-5",
+        "b-30-export-targets-the-shared-pipeline-is-6",
+        "b-30-export-targets-text-7",
+        "b-30-export-targets-the-folder-export-is-the-8",
+        "b-30-export-targets-supported-and-future-tar-9",
+        "b-30-export-targets-targets-table",
+        "b-30-export-targets-target-boundary-11",
+        "b-30-export-targets-an-export-target-can-dec-12",
+        "b-30-export-targets-metadata-json-13",
+        "b-30-export-targets-record-directory-naming-14",
+        "b-30-export-targets-indexes-history-jsonl-15",
+        "b-30-export-targets-indexes-dictionary-json-16",
+        "b-30-export-targets-manifest-json-17",
+        "b-30-export-targets-run-report-shape-18",
+        "b-30-export-targets-that-keeps-downstream-co-19",
+        "b-30-export-targets-future-target-requiremen-20",
+        "b-30-export-targets-a-future-remote-target-s-21",
+        "b-30-export-targets-how-credentials-are-conf-22",
+        "b-30-export-targets-which-files-are-uploaded-23",
+        "b-30-export-targets-whether-deleted-local-fi-24",
+        "b-30-export-targets-how-retries-and-partial-25",
+        "b-30-export-targets-whether-the-target-can-v-26"
+      ]
+    },
+    "b-30-export-targets-wisprsync-does-not-curre-2": {
+      "id": "b-30-export-targets-wisprsync-does-not-curre-2",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "WisprSync does not currently implement remote targets, webhooks, Git pushes, or provider-specific upload logic. The supported behavior is folder export only."
+        }
+      ],
+      "children": []
+    },
+    "b-30-export-targets-future-export-targets-sh-3": {
+      "id": "b-30-export-targets-future-export-targets-sh-3",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Future export targets should be modular layers around the same canonical data shape. The source reader and folder writer establish the base contract; optional future targets can add publishing behavior without changing record contents."
+        }
+      ],
+      "children": []
+    },
+    "b-30-export-targets-divider-4": {
+      "id": "b-30-export-targets-divider-4",
+      "type": "divider",
+      "props": {},
+      "children": []
+    },
+    "b-30-export-targets-target-model-5": {
+      "id": "b-30-export-targets-target-model-5",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Target Model"
+        }
+      ],
+      "children": []
+    },
+    "b-30-export-targets-the-shared-pipeline-is-6": {
+      "id": "b-30-export-targets-the-shared-pipeline-is-6",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The shared pipeline is:"
+        }
+      ],
+      "children": []
+    },
+    "b-30-export-targets-text-7": {
+      "id": "b-30-export-targets-text-7",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": "Wispr Flow SQLite\n  -> canonical records and indexes\n  -> folder export\n  -> optional future target sync"
+        }
+      ],
+      "children": []
+    },
+    "b-30-export-targets-the-folder-export-is-the-8": {
+      "id": "b-30-export-targets-the-folder-export-is-the-8",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The folder export is the base target because every remote target still needs a concrete set of files to publish."
+        }
+      ],
+      "children": []
+    },
+    "b-30-export-targets-supported-and-future-tar-9": {
+      "id": "b-30-export-targets-supported-and-future-tar-9",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Supported And Future Targets"
+        }
+      ],
+      "children": []
+    },
+    "b-30-export-targets-targets-table": {
+      "id": "b-30-export-targets-targets-table",
+      "type": "structured-table",
+      "props": {
+        "columns": [
+          "Target",
+          "Status",
+          "Description"
+        ],
+        "rows": [
+          [
+            "Folder",
+            "Supported base design",
+            "Write files to a specified local folder."
+          ],
+          [
+            "Cloud-synced folder",
+            "Supported by folder export",
+            "User chooses a Dropbox, iCloud Drive, Google Drive, or OneDrive folder."
+          ],
+          [
+            "GitHub through Git",
+            "Future extension idea",
+            "Commit and push the folder export to a Git remote."
+          ],
+          [
+            "Webhook or command hook",
+            "Future extension idea",
+            "Run a user-defined action after a successful folder export."
+          ],
+          [
+            "S3 or object storage",
+            "Future extension",
+            "Upload the canonical files to a bucket or object store."
+          ]
+        ],
+        "title": "Supported and future targets"
+      },
+      "children": []
+    },
+    "b-30-export-targets-target-boundary-11": {
+      "id": "b-30-export-targets-target-boundary-11",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Target Boundary"
+        }
+      ],
+      "children": []
+    },
+    "b-30-export-targets-an-export-target-can-dec-12": {
+      "id": "b-30-export-targets-an-export-target-can-dec-12",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "An export target can decide where files go after the canonical folder export exists. It should not redefine:"
+        }
+      ],
+      "children": []
+    },
+    "b-30-export-targets-metadata-json-13": {
+      "id": "b-30-export-targets-metadata-json-13",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "metadata.json",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": ","
+        }
+      ],
+      "children": []
+    },
+    "b-30-export-targets-record-directory-naming-14": {
+      "id": "b-30-export-targets-record-directory-naming-14",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "record directory naming,"
+        }
+      ],
+      "children": []
+    },
+    "b-30-export-targets-indexes-history-jsonl-15": {
+      "id": "b-30-export-targets-indexes-history-jsonl-15",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "indexes/history.jsonl",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": ","
+        }
+      ],
+      "children": []
+    },
+    "b-30-export-targets-indexes-dictionary-json-16": {
+      "id": "b-30-export-targets-indexes-dictionary-json-16",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "indexes/dictionary.jsonl",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": ","
+        }
+      ],
+      "children": []
+    },
+    "b-30-export-targets-manifest-json-17": {
+      "id": "b-30-export-targets-manifest-json-17",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "manifest.json",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": ","
+        }
+      ],
+      "children": []
+    },
+    "b-30-export-targets-run-report-shape-18": {
+      "id": "b-30-export-targets-run-report-shape-18",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "run report shape."
+        }
+      ],
+      "children": []
+    },
+    "b-30-export-targets-that-keeps-downstream-co-19": {
+      "id": "b-30-export-targets-that-keeps-downstream-co-19",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "That keeps downstream consumers independent of the sync provider."
+        }
+      ],
+      "children": []
+    },
+    "b-30-export-targets-future-target-requiremen-20": {
+      "id": "b-30-export-targets-future-target-requiremen-20",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Future Target Requirements"
+        }
+      ],
+      "children": []
+    },
+    "b-30-export-targets-a-future-remote-target-s-21": {
+      "id": "b-30-export-targets-a-future-remote-target-s-21",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "A future remote target should define:"
+        }
+      ],
+      "children": []
+    },
+    "b-30-export-targets-how-credentials-are-conf-22": {
+      "id": "b-30-export-targets-how-credentials-are-conf-22",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "how credentials are configured,"
+        }
+      ],
+      "children": []
+    },
+    "b-30-export-targets-which-files-are-uploaded-23": {
+      "id": "b-30-export-targets-which-files-are-uploaded-23",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "which files are uploaded,"
+        }
+      ],
+      "children": []
+    },
+    "b-30-export-targets-whether-deleted-local-fi-24": {
+      "id": "b-30-export-targets-whether-deleted-local-fi-24",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "whether deleted local files are removed remotely,"
+        }
+      ],
+      "children": []
+    },
+    "b-30-export-targets-how-retries-and-partial-25": {
+      "id": "b-30-export-targets-how-retries-and-partial-25",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "how retries and partial failures are reported,"
+        }
+      ],
+      "children": []
+    },
+    "b-30-export-targets-whether-the-target-can-v-26": {
+      "id": "b-30-export-targets-whether-the-target-can-v-26",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "whether the target can validate remote file hashes."
+        }
+      ],
+      "children": []
+    }
+  }
+}

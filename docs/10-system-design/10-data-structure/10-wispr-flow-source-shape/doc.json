@@ -1,0 +1,799 @@
+{
+  "schemaVersion": 1,
+  "id": "10-system-design-10-data-structure-10-wispr-flow-source-shape",
+  "title": "Wispr Flow Source Shape",
+  "root": "b-10-wispr-flow-source-shape-root-22",
+  "blocks": {
+    "b-10-wispr-flow-source-shape-root-22": {
+      "id": "b-10-wispr-flow-source-shape-root-22",
+      "type": "paragraph",
+      "props": {
+        "concepts": [
+          "wispr-flow",
+          "sqlite",
+          "history",
+          "dictionary"
+        ],
+        "covers": "The local Wispr Flow source data shape that WisprSync reads from SQLite."
+      },
+      "children": [
+        "b-10-wispr-flow-source-shape-wispr-flow-stores-the-lo-2",
+        "b-10-wispr-flow-source-shape-divider-3",
+        "b-10-wispr-flow-source-shape-source-database-4",
+        "b-10-wispr-flow-source-shape-the-main-source-database-5",
+        "b-10-wispr-flow-source-shape-text-6",
+        "b-10-wispr-flow-source-shape-the-primary-table-is-hi-7",
+        "b-10-wispr-flow-source-shape-text-8",
+        "b-10-wispr-flow-source-shape-each-history-row-repre-9",
+        "b-10-wispr-flow-source-shape-history-field-groups-10",
+        "b-10-wispr-flow-source-shape-important-history-fiel-11",
+        "b-10-wispr-flow-source-shape-history-fields-table",
+        "b-10-wispr-flow-source-shape-source-media-13",
+        "b-10-wispr-flow-source-shape-known-source-media-14",
+        "b-10-wispr-flow-source-shape-text-15",
+        "b-10-wispr-flow-source-shape-wisprsync-exports-audio-16",
+        "b-10-wispr-flow-source-shape-dictionary-data-17",
+        "b-10-wispr-flow-source-shape-wispr-flow-also-has-a-d-18",
+        "b-10-wispr-flow-source-shape-important-dictionary-fie-19",
+        "b-10-wispr-flow-source-shape-text-20",
+        "b-10-wispr-flow-source-shape-dictionary-rows-are-expo-21"
+      ]
+    },
+    "b-10-wispr-flow-source-shape-wispr-flow-stores-the-lo-2": {
+      "id": "b-10-wispr-flow-source-shape-wispr-flow-stores-the-lo-2",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Wispr Flow stores the local transcript corpus in a SQLite database. WisprSync treats that database as a read-only source and builds its canonical export from the "
+        },
+        {
+          "insert": "History",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " and "
+        },
+        {
+          "insert": "Dictionary",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " tables."
+        }
+      ],
+      "children": []
+    },
+    "b-10-wispr-flow-source-shape-divider-3": {
+      "id": "b-10-wispr-flow-source-shape-divider-3",
+      "type": "divider",
+      "props": {},
+      "children": []
+    },
+    "b-10-wispr-flow-source-shape-source-database-4": {
+      "id": "b-10-wispr-flow-source-shape-source-database-4",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Source Database"
+        }
+      ],
+      "children": []
+    },
+    "b-10-wispr-flow-source-shape-the-main-source-database-5": {
+      "id": "b-10-wispr-flow-source-shape-the-main-source-database-5",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The main source database is usually:"
+        }
+      ],
+      "children": []
+    },
+    "b-10-wispr-flow-source-shape-text-6": {
+      "id": "b-10-wispr-flow-source-shape-text-6",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": "~/Library/Application Support/Wispr Flow/flow.sqlite"
+        }
+      ],
+      "children": []
+    },
+    "b-10-wispr-flow-source-shape-the-primary-table-is-hi-7": {
+      "id": "b-10-wispr-flow-source-shape-the-primary-table-is-hi-7",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The primary table is "
+        },
+        {
+          "insert": "History",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": ", keyed by:"
+        }
+      ],
+      "children": []
+    },
+    "b-10-wispr-flow-source-shape-text-8": {
+      "id": "b-10-wispr-flow-source-shape-text-8",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": "transcriptEntityId"
+        }
+      ],
+      "children": []
+    },
+    "b-10-wispr-flow-source-shape-each-history-row-repre-9": {
+      "id": "b-10-wispr-flow-source-shape-each-history-row-repre-9",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Each "
+        },
+        {
+          "insert": "History",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " row represents one dictation or transcript event, plus surrounding app context and any available media."
+        }
+      ],
+      "children": []
+    },
+    "b-10-wispr-flow-source-shape-history-field-groups-10": {
+      "id": "b-10-wispr-flow-source-shape-history-field-groups-10",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "History Field Groups"
+        }
+      ],
+      "children": []
+    },
+    "b-10-wispr-flow-source-shape-important-history-fiel-11": {
+      "id": "b-10-wispr-flow-source-shape-important-history-fiel-11",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Important "
+        },
+        {
+          "insert": "History",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " fields group into these concepts:"
+        }
+      ],
+      "children": []
+    },
+    "b-10-wispr-flow-source-shape-history-fields-table": {
+      "id": "b-10-wispr-flow-source-shape-history-fields-table",
+      "type": "structured-table",
+      "props": {
+        "columns": [
+          "Concept",
+          "Source fields"
+        ],
+        "rows": [
+          [
+            "Identity",
+            [
+              {
+                "insert": "transcriptEntityId",
+                "attributes": {
+                  "code": true
+                }
+              }
+            ]
+          ],
+          [
+            "Time",
+            [
+              {
+                "insert": "timestamp",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "timezoneOffsetMinutes",
+                "attributes": {
+                  "code": true
+                }
+              }
+            ]
+          ],
+          [
+            "Transcript text",
+            [
+              {
+                "insert": "asrText",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "formattedText",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "editedText",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "pastedText",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "defaultAsrText",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "fallbackAsrText",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "defaultFormattedText",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "fallbackFormattedText",
+                "attributes": {
+                  "code": true
+                }
+              }
+            ]
+          ],
+          [
+            "Status",
+            [
+              {
+                "insert": "status",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "editedTextStatus",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "needsUploading",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "shareType",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "isArchived",
+                "attributes": {
+                  "code": true
+                }
+              }
+            ]
+          ],
+          [
+            "App context",
+            [
+              {
+                "insert": "app",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "url",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "additionalContext",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "textboxContents",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "appVersion",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "platform",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "transcriptOrigin",
+                "attributes": {
+                  "code": true
+                }
+              }
+            ]
+          ],
+          [
+            "Language and device",
+            [
+              {
+                "insert": "language",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "detectedLanguage",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "micDevice",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "conversationId",
+                "attributes": {
+                  "code": true
+                }
+              }
+            ]
+          ],
+          [
+            "Statistics",
+            [
+              {
+                "insert": "duration",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "speechDuration",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "numWords",
+                "attributes": {
+                  "code": true
+                }
+              }
+            ]
+          ],
+          [
+            "Quality and edits",
+            [
+              {
+                "insert": "e2eLatency",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "clientNetworkLatency",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "averageLogProb",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "formattingDivergenceScore",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "fallbackAsrDivergenceScore",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "fallbackFormattingDivergenceScore",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "usedFallbackAsr",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "usedFallbackFormatting",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "calledExternalAsr",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "userEditMetaData",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "numWordsCorrected",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "numDictionaryReplacements",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "hasRevertedAI",
+                "attributes": {
+                  "code": true
+                }
+              }
+            ]
+          ],
+          [
+            "Media",
+            [
+              {
+                "insert": "audio",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "screenshot",
+                "attributes": {
+                  "code": true
+                }
+              },
+              {
+                "insert": ", "
+              },
+              {
+                "insert": "opusChunks",
+                "attributes": {
+                  "code": true
+                }
+              }
+            ]
+          ]
+        ],
+        "title": "History field groups"
+      },
+      "children": []
+    },
+    "b-10-wispr-flow-source-shape-source-media-13": {
+      "id": "b-10-wispr-flow-source-shape-source-media-13",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Source Media"
+        }
+      ],
+      "children": []
+    },
+    "b-10-wispr-flow-source-shape-known-source-media-14": {
+      "id": "b-10-wispr-flow-source-shape-known-source-media-14",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Known source media:"
+        }
+      ],
+      "children": []
+    },
+    "b-10-wispr-flow-source-shape-text-15": {
+      "id": "b-10-wispr-flow-source-shape-text-15",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": "audio       WAV, PCM signed 16-bit, mono, 16000 Hz\nscreenshot  PNG\nopusChunks  internal Opus packet JSON"
+        }
+      ],
+      "children": []
+    },
+    "b-10-wispr-flow-source-shape-wisprsync-exports-audio-16": {
+      "id": "b-10-wispr-flow-source-shape-wisprsync-exports-audio-16",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "WisprSync exports "
+        },
+        {
+          "insert": "audio",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " and "
+        },
+        {
+          "insert": "screenshot",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " as portable files when present. "
+        },
+        {
+          "insert": "opusChunks",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " is intentionally excluded from the canonical export because the inspected rows that include it also include normal WAV audio, and the WAV artifact is the stable downstream format."
+        }
+      ],
+      "children": []
+    },
+    "b-10-wispr-flow-source-shape-dictionary-data-17": {
+      "id": "b-10-wispr-flow-source-shape-dictionary-data-17",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Dictionary Data"
+        }
+      ],
+      "children": []
+    },
+    "b-10-wispr-flow-source-shape-wispr-flow-also-has-a-d-18": {
+      "id": "b-10-wispr-flow-source-shape-wispr-flow-also-has-a-d-18",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Wispr Flow also has a "
+        },
+        {
+          "insert": "Dictionary",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " table. WisprSync treats dictionary rows as current vocabulary/snippet state, not as transcript events."
+        }
+      ],
+      "children": []
+    },
+    "b-10-wispr-flow-source-shape-important-dictionary-fie-19": {
+      "id": "b-10-wispr-flow-source-shape-important-dictionary-fie-19",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Important dictionary fields include:"
+        }
+      ],
+      "children": []
+    },
+    "b-10-wispr-flow-source-shape-text-20": {
+      "id": "b-10-wispr-flow-source-shape-text-20",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": "id\nphrase\nreplacement\nteamDictionaryId\nlastUsed\nfrequencyUsed\nremoteFrequencyUsed\nmanualEntry\ncreatedAt\nmodifiedAt\nisDeleted\nsource\nobservedSource\nisSnippet\nisStarred"
+        }
+      ],
+      "children": []
+    },
+    "b-10-wispr-flow-source-shape-dictionary-rows-are-expo-21": {
+      "id": "b-10-wispr-flow-source-shape-dictionary-rows-are-expo-21",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Dictionary rows are exported separately from "
+        },
+        {
+          "insert": "History",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " records."
+        }
+      ],
+      "children": []
+    }
+  }
+}

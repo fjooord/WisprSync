@@ -1,0 +1,183 @@
+{
+  "schemaVersion": 1,
+  "id": "00-foundation-00-overview",
+  "title": "Foundation",
+  "root": "b-00-overview-root-13",
+  "blocks": {
+    "b-00-overview-root-13": {
+      "id": "b-00-overview-root-13",
+      "type": "paragraph",
+      "props": {
+        "concepts": [
+          "foundation",
+          "backstory",
+          "data-ownership"
+        ],
+        "covers": "Foundation documentation for why WisprSync exists and what data ownership problem it addresses.",
+        "type": "overview"
+      },
+      "children": [
+        "b-00-overview-the-foundation-layer-cap-2",
+        "b-00-overview-divider-3",
+        "b-00-overview-file-tree-4",
+        "b-00-overview-text-5",
+        "b-00-overview-child-nodes-6",
+        "b-00-overview-backstory-10-backstory-7",
+        "b-00-overview-explains-why-wisprsync-e-8",
+        "b-00-overview-principles-20-principl-9",
+        "b-00-overview-captures-the-core-produc-10",
+        "b-00-overview-boundaries-30-boundari-11",
+        "b-00-overview-defines-what-wisprsync-i-12"
+      ]
+    },
+    "b-00-overview-the-foundation-layer-cap-2": {
+      "id": "b-00-overview-the-foundation-layer-cap-2",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The foundation layer captures the motivation for WisprSync: local data ownership for Wispr Flow transcript history. It is the place for project backstory and framing, separate from system design and implementation details."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-divider-3": {
+      "id": "b-00-overview-divider-3",
+      "type": "divider",
+      "props": {},
+      "children": []
+    },
+    "b-00-overview-file-tree-4": {
+      "id": "b-00-overview-file-tree-4",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "File Tree"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-text-5": {
+      "id": "b-00-overview-text-5",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": "00-foundation/                  (this page)\n├── 10-backstory/               Project origin, discovery process, and ownership motivation\n├── 20-principles/              Data ownership and local-first export principles\n└── 30-boundaries/              Non-affiliation, safety, and scope boundaries"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-child-nodes-6": {
+      "id": "b-00-overview-child-nodes-6",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Child Nodes"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-backstory-10-backstory-7": {
+      "id": "b-00-overview-backstory-10-backstory-7",
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "text": [
+        {
+          "insert": "Backstory",
+          "attributes": {
+            "reference": {
+              "kind": "doc",
+              "path": "00-foundation/10-backstory",
+              "label": "Backstory"
+            }
+          }
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-explains-why-wisprsync-e-8": {
+      "id": "b-00-overview-explains-why-wisprsync-e-8",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Explains why WisprSync exists, how the local data was discovered, and why the project focuses on making already-local transcript data accessible and portable."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-principles-20-principl-9": {
+      "id": "b-00-overview-principles-20-principl-9",
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "text": [
+        {
+          "insert": "Principles",
+          "attributes": {
+            "reference": {
+              "kind": "doc",
+              "path": "00-foundation/20-principles",
+              "label": "Principles"
+            }
+          }
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-captures-the-core-produc-10": {
+      "id": "b-00-overview-captures-the-core-produc-10",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Captures the core product principles: data ownership, local-first export, transparent formats, explicit sync, and safe defaults."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-boundaries-30-boundari-11": {
+      "id": "b-00-overview-boundaries-30-boundari-11",
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "text": [
+        {
+          "insert": "Boundaries",
+          "attributes": {
+            "reference": {
+              "kind": "doc",
+              "path": "00-foundation/30-boundaries",
+              "label": "Boundaries"
+            }
+          }
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-defines-what-wisprsync-i-12": {
+      "id": "b-00-overview-defines-what-wisprsync-i-12",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Defines what WisprSync is not: not affiliated with Wispr Flow, not a restore tool, not a raw app backup, not automatic publishing, and not a permanent Wispr Flow schema contract."
+        }
+      ],
+      "children": []
+    }
+  }
+}

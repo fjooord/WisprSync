@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "id": "20-implementation-99-appendix-00-overview",
+  "title": "Appendix",
+  "root": "b-00-overview-root-11",
+  "blocks": {
+    "b-00-overview-root-11": {
+      "id": "b-00-overview-root-11",
+      "type": "paragraph",
+      "props": {
+        "concepts": [
+          "setup",
+          "config",
+          "operations"
+        ],
+        "covers": "Operational documentation for local WisprSync setup and configuration.",
+        "type": "overview"
+      },
+      "children": [
+        "b-00-overview-the-appendix-contains-op-2",
+        "b-00-overview-divider-3",
+        "b-00-overview-file-tree-4",
+        "b-00-overview-text-5",
+        "b-00-overview-child-nodes-6",
+        "b-00-overview-setup-workflow-10-setu-7",
+        "b-00-overview-documents-how-a-local-wi-8",
+        "b-00-overview-macos-scheduler-permiss-9",
+        "b-00-overview-documents-how-the-macos-10"
+      ]
+    },
+    "b-00-overview-the-appendix-contains-op-2": {
+      "id": "b-00-overview-the-appendix-contains-op-2",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The appendix contains operational documentation that supports the implementation but is not part of the core data model. It covers local setup, source discovery, configuration, and repo-local command expectations."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-divider-3": {
+      "id": "b-00-overview-divider-3",
+      "type": "divider",
+      "props": {},
+      "children": []
+    },
+    "b-00-overview-file-tree-4": {
+      "id": "b-00-overview-file-tree-4",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "File Tree"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-text-5": {
+      "id": "b-00-overview-text-5",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": "99-appendix/                    (this page)\n├── 10-setup-workflow/          Local setup, source discovery, config, commands, and scheduling\n└── 20-macos-scheduler-permissions/\n                                macOS LaunchAgent runner and privacy-permission implementation"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-child-nodes-6": {
+      "id": "b-00-overview-child-nodes-6",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Child Nodes"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-setup-workflow-10-setu-7": {
+      "id": "b-00-overview-setup-workflow-10-setu-7",
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "text": [
+        {
+          "insert": "Setup Workflow",
+          "attributes": {
+            "reference": {
+              "kind": "doc",
+              "path": "20-implementation/99-appendix/10-setup-workflow",
+              "label": "Setup Workflow"
+            }
+          }
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-documents-how-a-local-wi-8": {
+      "id": "b-00-overview-documents-how-a-local-wi-8",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Documents how a local WisprSync repo discovers the Wispr Flow database, writes "
+        },
+        {
+          "insert": ".wisprsync/config.json",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": ", and exposes setup/sync commands."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-macos-scheduler-permiss-9": {
+      "id": "b-00-overview-macos-scheduler-permiss-9",
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "text": [
+        {
+          "insert": "macOS Scheduler Permissions",
+          "attributes": {
+            "reference": {
+              "kind": "doc",
+              "path": "20-implementation/99-appendix/20-macos-scheduler-permissions",
+              "label": "macOS Scheduler Permissions"
+            }
+          }
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-documents-how-the-macos-10": {
+      "id": "b-00-overview-documents-how-the-macos-10",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Documents how the macOS LaunchAgent runs through a dedicated local runner app and private Python runtime so privacy access does not need to be granted to a shared Python interpreter."
+        }
+      ],
+      "children": []
+    }
+  }
+}

@@ -1,0 +1,313 @@
+{
+  "schemaVersion": 1,
+  "id": "10-system-design-00-overview",
+  "title": "System Design",
+  "root": "b-00-overview-root-22",
+  "blocks": {
+    "b-00-overview-root-22": {
+      "id": "b-00-overview-root-22",
+      "type": "paragraph",
+      "props": {
+        "concepts": [
+          "data-model",
+          "export",
+          "sync"
+        ],
+        "covers": "System design documentation for WisprSync data structure and synchronization behavior.",
+        "type": "overview"
+      },
+      "children": [
+        "b-00-overview-the-system-design-layer-2",
+        "b-00-overview-divider-3",
+        "b-00-overview-file-tree-4",
+        "b-00-overview-text-5",
+        "b-00-overview-design-scope-6",
+        "b-00-overview-what-this-layer-owns-7",
+        "b-00-overview-the-canonical-meaning-of-8",
+        "b-00-overview-the-mapping-from-wispr-f-9",
+        "b-00-overview-the-exported-data-lay-10",
+        "b-00-overview-sync-behavior-around-ide-11",
+        "b-00-overview-what-this-layer-does-not-12",
+        "b-00-overview-python-module-boundaries-13",
+        "b-00-overview-cli-argument-parsing-14",
+        "b-00-overview-local-setup-mechanics-15",
+        "b-00-overview-validation-implementatio-16",
+        "b-00-overview-child-nodes-17",
+        "b-00-overview-data-structure-10-data-18",
+        "b-00-overview-explains-the-source-and-19",
+        "b-00-overview-exporting-20-exporting-20",
+        "b-00-overview-explains-the-default-fol-21"
+      ]
+    },
+    "b-00-overview-the-system-design-layer-2": {
+      "id": "b-00-overview-the-system-design-layer-2",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The system design layer documents WisprSync as a data model and export process, not as a Python package. It defines the source shape in Wispr Flow, the normalized record shape used by WisprSync, and the file tree contracts that downstream tools can depend on."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-divider-3": {
+      "id": "b-00-overview-divider-3",
+      "type": "divider",
+      "props": {},
+      "children": []
+    },
+    "b-00-overview-file-tree-4": {
+      "id": "b-00-overview-file-tree-4",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "File Tree"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-text-5": {
+      "id": "b-00-overview-text-5",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": "10-system-design/               (this page)\n├── 10-data-structure/          Wispr Flow source shape and WisprSync output shape\n└── 20-exporting/               Folder export and future export target ideas"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-design-scope-6": {
+      "id": "b-00-overview-design-scope-6",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Design Scope"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-what-this-layer-owns-7": {
+      "id": "b-00-overview-what-this-layer-owns-7",
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "text": [
+        {
+          "insert": "What This Layer Owns"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-the-canonical-meaning-of-8": {
+      "id": "b-00-overview-the-canonical-meaning-of-8",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "The canonical meaning of a transcript record."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-the-mapping-from-wispr-f-9": {
+      "id": "b-00-overview-the-mapping-from-wispr-f-9",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "The mapping from Wispr Flow source fields into portable data concepts."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-the-exported-data-lay-10": {
+      "id": "b-00-overview-the-exported-data-lay-10",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "The exported "
+        },
+        {
+          "insert": "data/",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " layout and the guarantees made by that layout."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-sync-behavior-around-ide-11": {
+      "id": "b-00-overview-sync-behavior-around-ide-11",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "Sync behavior around identity, updates, missing source rows, and collisions."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-what-this-layer-does-not-12": {
+      "id": "b-00-overview-what-this-layer-does-not-12",
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "text": [
+        {
+          "insert": "What This Layer Does Not Own"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-python-module-boundaries-13": {
+      "id": "b-00-overview-python-module-boundaries-13",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "Python module boundaries."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-cli-argument-parsing-14": {
+      "id": "b-00-overview-cli-argument-parsing-14",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "CLI argument parsing."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-local-setup-mechanics-15": {
+      "id": "b-00-overview-local-setup-mechanics-15",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "Local setup mechanics."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-validation-implementatio-16": {
+      "id": "b-00-overview-validation-implementatio-16",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "Validation implementation details."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-child-nodes-17": {
+      "id": "b-00-overview-child-nodes-17",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Child Nodes"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-data-structure-10-data-18": {
+      "id": "b-00-overview-data-structure-10-data-18",
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "text": [
+        {
+          "insert": "Data Structure",
+          "attributes": {
+            "reference": {
+              "kind": "doc",
+              "path": "10-system-design/10-data-structure",
+              "label": "Data Structure"
+            }
+          }
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-explains-the-source-and-19": {
+      "id": "b-00-overview-explains-the-source-and-19",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Explains the source and output data shapes as separate design documents: what exists in Wispr Flow, and what WisprSync exports."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-exporting-20-exporting-20": {
+      "id": "b-00-overview-exporting-20-exporting-20",
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "text": [
+        {
+          "insert": "Exporting",
+          "attributes": {
+            "reference": {
+              "kind": "doc",
+              "path": "10-system-design/20-exporting",
+              "label": "Exporting"
+            }
+          }
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-explains-the-default-fol-21": {
+      "id": "b-00-overview-explains-the-default-fol-21",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Explains the default folder export and how future targets could be layered without changing the canonical data shape."
+        }
+      ],
+      "children": []
+    }
+  }
+}

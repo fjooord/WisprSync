@@ -1,0 +1,560 @@
+{
+  "schemaVersion": 1,
+  "id": "00-foundation-10-backstory",
+  "title": "Backstory",
+  "root": "b-10-backstory-root-42",
+  "blocks": {
+    "b-10-backstory-root-42": {
+      "id": "b-10-backstory-root-42",
+      "type": "paragraph",
+      "props": {
+        "concepts": [
+          "backstory",
+          "data-export",
+          "ownership"
+        ],
+        "covers": "The project origin story for WisprSync and the local data ownership problem it addresses."
+      },
+      "children": [
+        "b-10-backstory-wisprsync-started-from-a-2",
+        "b-10-backstory-i-use-wispr-flow-heavily-3",
+        "b-10-backstory-i-reached-out-to-support-4",
+        "b-10-backstory-the-answer-was-5",
+        "b-10-backstory-i-ve-recorded-your-feat-6",
+        "b-10-backstory-this-was-not-a-feasible-7",
+        "b-10-backstory-at-first-that-seemed-an-8",
+        "b-10-backstory-if-all-historical-transc-9",
+        "b-10-backstory-a-full-export-feature-co-10",
+        "b-10-backstory-then-i-looked-more-close-12",
+        "b-10-backstory-wispr-flow-has-local-his-13",
+        "b-10-backstory-i-asked-codex-to-inspect-14",
+        "b-10-backstory-it-was-15",
+        "b-10-backstory-the-local-wispr-flow-dat-16",
+        "b-10-backstory-transcript-history-17",
+        "b-10-backstory-dictionary-data-25",
+        "b-10-backstory-everything-i-needed-and-26",
+        "b-10-backstory-that-changed-the-shape-o-27",
+        "b-10-backstory-if-the-data-is-already-s-28",
+        "b-10-backstory-instead-the-only-optio-32",
+        "b-10-backstory-users-do-not-have-clear-36",
+        "b-10-backstory-if-the-data-is-already-o-38",
+        "b-10-backstory-the-missing-piece-was-no-39",
+        "b-10-backstory-wisprsync-is-that-export-40",
+        "b-10-backstory-it-reads-the-local-wispr-41"
+      ]
+    },
+    "b-10-backstory-wisprsync-started-from-a-2": {
+      "id": "b-10-backstory-wisprsync-started-from-a-2",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "WisprSync started from a simple data access problem."
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-i-use-wispr-flow-heavily-3": {
+      "id": "b-10-backstory-i-use-wispr-flow-heavily-3",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "I use Wispr Flow heavily and wanted a full export of my transcript history and audio so I could analyze it, back it up, and keep it accessible outside the product."
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-i-reached-out-to-support-4": {
+      "id": "b-10-backstory-i-reached-out-to-support-4",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "I reached out to support and asked for a full data export."
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-the-answer-was-5": {
+      "id": "b-10-backstory-the-answer-was-5",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The answer was: "
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-i-ve-recorded-your-feat-6": {
+      "id": "b-10-backstory-i-ve-recorded-your-feat-6",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "\"I've recorded your feature request for the product team. In the meantime, the only option is manually copying transcripts from your History or downloading individual audio files.\""
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-this-was-not-a-feasible-7": {
+      "id": "b-10-backstory-this-was-not-a-feasible-7",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "This was not a feasible option given my over 600K words transcribed."
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-at-first-that-seemed-an-8": {
+      "id": "b-10-backstory-at-first-that-seemed-an-8",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "At first, that seemed annoying but understandable."
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-if-all-historical-transc-9": {
+      "id": "b-10-backstory-if-all-historical-transc-9",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "If all historical transcripts and audio lived only in Wispr Flow's cloud systems"
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-a-full-export-feature-co-10": {
+      "id": "b-10-backstory-a-full-export-feature-co-10",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "A full export feature could involve real product work and costs "
+        }
+      ],
+      "children": [
+        "b-10-backstory-egress-permissions-pac-11"
+      ]
+    },
+    "b-10-backstory-egress-permissions-pac-11": {
+      "id": "b-10-backstory-egress-permissions-pac-11",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "Egress, permissions, packaging, retries, support, etc."
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-then-i-looked-more-close-12": {
+      "id": "b-10-backstory-then-i-looked-more-close-12",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Then I looked more closely at the local app."
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-wispr-flow-has-local-his-13": {
+      "id": "b-10-backstory-wispr-flow-has-local-his-13",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Wispr Flow has local history behavior for features such as transcript retries and normal app operation."
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-i-asked-codex-to-inspect-14": {
+      "id": "b-10-backstory-i-asked-codex-to-inspect-14",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "I asked Codex to inspect the local machine and find out whether the transcript data was actually present there."
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-it-was-15": {
+      "id": "b-10-backstory-it-was-15",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "It was."
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-the-local-wispr-flow-dat-16": {
+      "id": "b-10-backstory-the-local-wispr-flow-dat-16",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The local Wispr Flow data included a SQLite database containing:"
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-transcript-history-17": {
+      "id": "b-10-backstory-transcript-history-17",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "Transcript history"
+        }
+      ],
+      "children": [
+        "b-10-backstory-formatted-text-18",
+        "b-10-backstory-raw-asr-text-19",
+        "b-10-backstory-edited-and-pasted-text-20",
+        "b-10-backstory-app-context-21",
+        "b-10-backstory-timestamps-22",
+        "b-10-backstory-audio-of-transcript-23",
+        "b-10-backstory-screenshots-with-transcr-24"
+      ]
+    },
+    "b-10-backstory-formatted-text-18": {
+      "id": "b-10-backstory-formatted-text-18",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "Formatted text"
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-raw-asr-text-19": {
+      "id": "b-10-backstory-raw-asr-text-19",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "Raw ASR text"
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-edited-and-pasted-text-20": {
+      "id": "b-10-backstory-edited-and-pasted-text-20",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "Edited and pasted text"
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-app-context-21": {
+      "id": "b-10-backstory-app-context-21",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "App context"
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-timestamps-22": {
+      "id": "b-10-backstory-timestamps-22",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "Timestamps"
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-audio-of-transcript-23": {
+      "id": "b-10-backstory-audio-of-transcript-23",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "Audio of transcript"
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-screenshots-with-transcr-24": {
+      "id": "b-10-backstory-screenshots-with-transcr-24",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "Screenshots with transcript"
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-dictionary-data-25": {
+      "id": "b-10-backstory-dictionary-data-25",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "Dictionary data"
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-everything-i-needed-and-26": {
+      "id": "b-10-backstory-everything-i-needed-and-26",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Everything I needed and more was already on "
+        },
+        {
+          "insert": "MY",
+          "attributes": {
+            "bold": true
+          }
+        },
+        {
+          "insert": " machine"
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-that-changed-the-shape-o-27": {
+      "id": "b-10-backstory-that-changed-the-shape-o-27",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "That changed the shape of the problem and pissed me off."
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-if-the-data-is-already-s-28": {
+      "id": "b-10-backstory-if-the-data-is-already-s-28",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "If the data is already stored locally, then the product clearly has an easy path to help users export it"
+        }
+      ],
+      "children": [
+        "b-10-backstory-they-do-not-expose-this-29",
+        "b-10-backstory-when-i-reached-out-to-su-30",
+        "b-10-backstory-with-one-codex-prompt-t-31"
+      ]
+    },
+    "b-10-backstory-they-do-not-expose-this-29": {
+      "id": "b-10-backstory-they-do-not-expose-this-29",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "They do not expose this knowledge anywhere"
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-when-i-reached-out-to-su-30": {
+      "id": "b-10-backstory-when-i-reached-out-to-su-30",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "When I reached out to support directly, I was told a full export was not possible"
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-with-one-codex-prompt-t-31": {
+      "id": "b-10-backstory-with-one-codex-prompt-t-31",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "With one Codex prompt, the local data was discoverable and exportable"
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-instead-the-only-optio-32": {
+      "id": "b-10-backstory-instead-the-only-optio-32",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "Instead, the \"only option\" is one-by-one export"
+        }
+      ],
+      "children": [
+        "b-10-backstory-that-makes-it-extremely-33",
+        "b-10-backstory-to-me-that-is-clearly-a-34",
+        "b-10-backstory-it-feels-like-feigning-d-35"
+      ]
+    },
+    "b-10-backstory-that-makes-it-extremely-33": {
+      "id": "b-10-backstory-that-makes-it-extremely-33",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "That makes it extremely hard to export your data and transition to another provider."
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-to-me-that-is-clearly-a-34": {
+      "id": "b-10-backstory-to-me-that-is-clearly-a-34",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "To me, that is clearly anti-competitive lock-in, or at minimum a product choice that does not actually care about the user experience of data ownership."
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-it-feels-like-feigning-d-35": {
+      "id": "b-10-backstory-it-feels-like-feigning-d-35",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "It feels like feigning data access while making real data access unnecessarily difficult."
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-users-do-not-have-clear-36": {
+      "id": "b-10-backstory-users-do-not-have-clear-36",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "Users do not have clear ownership of data that already exists on their own device."
+        }
+      ],
+      "children": [
+        "b-10-backstory-that-is-fucked-37"
+      ]
+    },
+    "b-10-backstory-that-is-fucked-37": {
+      "id": "b-10-backstory-that-is-fucked-37",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "That is fucked."
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-if-the-data-is-already-o-38": {
+      "id": "b-10-backstory-if-the-data-is-already-o-38",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "If the data is already on your machine, you should be able to inspect it, back it up, analyze it, and move it into whatever workflow you prefer."
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-the-missing-piece-was-no-39": {
+      "id": "b-10-backstory-the-missing-piece-was-no-39",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The missing piece was not access to a remote export API, but a clear local exporter that writes the data into a folder you control."
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-wisprsync-is-that-export-40": {
+      "id": "b-10-backstory-wisprsync-is-that-export-40",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "WisprSync is that exporter."
+        }
+      ],
+      "children": []
+    },
+    "b-10-backstory-it-reads-the-local-wispr-41": {
+      "id": "b-10-backstory-it-reads-the-local-wispr-41",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "It reads the local Wispr Flow database, extracts the transcript records and related artifacts, and writes them into a documented data folder with metadata, transcript text files, media files, indexes, a manifest, and run reports."
+        }
+      ],
+      "children": []
+    }
+  }
+}

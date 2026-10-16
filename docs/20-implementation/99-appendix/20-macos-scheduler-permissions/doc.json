@@ -1,0 +1,802 @@
+{
+  "schemaVersion": 1,
+  "id": "20-implementation-99-appendix-20-macos-scheduler-permissions",
+  "title": "macOS Scheduler Permissions",
+  "root": "b-20-macos-scheduler-permissions-root-47",
+  "blocks": {
+    "b-20-macos-scheduler-permissions-root-47": {
+      "id": "b-20-macos-scheduler-permissions-root-47",
+      "type": "paragraph",
+      "props": {
+        "concepts": [
+          "macos",
+          "launchd",
+          "permissions",
+          "scheduler",
+          "runner"
+        ],
+        "covers": "How the macOS scheduled sync runner is installed, how it executes, and how privacy permissions are scoped.",
+        "design_refs": [
+          "10-system-design/20-exporting/10-folder-export.md"
+        ],
+        "type": "implementation"
+      },
+      "children": [
+        "b-20-macos-scheduler-permissions-wisprsync-s-scheduled-ma-2",
+        "b-20-macos-scheduler-permissions-divider-3",
+        "b-20-macos-scheduler-permissions-problem-4",
+        "b-20-macos-scheduler-permissions-the-scheduled-job-needs-5",
+        "b-20-macos-scheduler-permissions-text-6",
+        "b-20-macos-scheduler-permissions-when-launchd-runs-a-he-7",
+        "b-20-macos-scheduler-permissions-runtime-shape-8",
+        "b-20-macos-scheduler-permissions-python3-m-wisprsync-sc-9",
+        "b-20-macos-scheduler-permissions-text-10",
+        "b-20-macos-scheduler-permissions-the-launchagent-runs-onl-11",
+        "b-20-macos-scheduler-permissions-text-12",
+        "b-20-macos-scheduler-permissions-that-executable-is-a-sma-13",
+        "b-20-macos-scheduler-permissions-sh-14",
+        "b-20-macos-scheduler-permissions-the-private-runtime-is-c-15",
+        "b-20-macos-scheduler-permissions-permission-boundary-16",
+        "b-20-macos-scheduler-permissions-the-intended-permission-17",
+        "b-20-macos-scheduler-permissions-text-18",
+        "b-20-macos-scheduler-permissions-if-macos-blocks-the-sche-19",
+        "b-20-macos-scheduler-permissions-this-does-not-create-per-20",
+        "b-20-macos-scheduler-permissions-install-flow-21",
+        "b-20-macos-scheduler-permissions-schedule-installation-is-22",
+        "b-20-macos-scheduler-permissions-the-install-sequence-is-23",
+        "b-20-macos-scheduler-permissions-create-wisprsync-runne-24",
+        "b-20-macos-scheduler-permissions-generate-wisprsync-wis-25",
+        "b-20-macos-scheduler-permissions-generate-wisprsync-wis-26",
+        "b-20-macos-scheduler-permissions-write-library-launcha-27",
+        "b-20-macos-scheduler-permissions-unload-any-existing-job-28",
+        "b-20-macos-scheduler-permissions-load-the-new-launchagent-29",
+        "b-20-macos-scheduler-permissions-the-launchagent-keeps-th-30",
+        "b-20-macos-scheduler-permissions-verification-31",
+        "b-20-macos-scheduler-permissions-after-install-verify-th-32",
+        "b-20-macos-scheduler-permissions-sh-33",
+        "b-20-macos-scheduler-permissions-the-programarguments-e-34",
+        "b-20-macos-scheduler-permissions-text-35",
+        "b-20-macos-scheduler-permissions-kick-the-job-manually-36",
+        "b-20-macos-scheduler-permissions-sh-37",
+        "b-20-macos-scheduler-permissions-then-check-logs-and-stat-38",
+        "b-20-macos-scheduler-permissions-sh-39",
+        "b-20-macos-scheduler-permissions-a-healthy-run-has-laste-40",
+        "b-20-macos-scheduler-permissions-failure-modes-41",
+        "b-20-macos-scheduler-permissions-if-the-run-fails-with-u-42",
+        "b-20-macos-scheduler-permissions-if-the-run-fails-with-o-43",
+        "b-20-macos-scheduler-permissions-in-either-case-the-firs-44",
+        "b-20-macos-scheduler-permissions-text-45",
+        "b-20-macos-scheduler-permissions-after-granting-access-k-46"
+      ]
+    },
+    "b-20-macos-scheduler-permissions-wisprsync-s-scheduled-ma-2": {
+      "id": "b-20-macos-scheduler-permissions-wisprsync-s-scheduled-ma-2",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "WisprSync's scheduled macOS sync uses a dedicated local runner instead of a shared Python interpreter. This keeps the permission target narrow when macOS privacy controls gate access to the Wispr Flow database and the configured export folder."
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-divider-3": {
+      "id": "b-20-macos-scheduler-permissions-divider-3",
+      "type": "divider",
+      "props": {},
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-problem-4": {
+      "id": "b-20-macos-scheduler-permissions-problem-4",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Problem"
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-the-scheduled-job-needs-5": {
+      "id": "b-20-macos-scheduler-permissions-the-scheduled-job-needs-5",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The scheduled job needs to read the Wispr Flow SQLite database and write the configured export folder. On this machine, those paths are:"
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-text-6": {
+      "id": "b-20-macos-scheduler-permissions-text-6",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": "~/Library/Application Support/Wispr Flow/flow.sqlite\n~/Library/CloudStorage/Dropbox/wispr_sync"
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-when-launchd-runs-a-he-7": {
+      "id": "b-20-macos-scheduler-permissions-when-launchd-runs-a-he-7",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "When "
+        },
+        {
+          "insert": "launchd",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " runs a headless job, macOS privacy controls can deny access even when the same command works from an interactive terminal. Granting Full Disk Access to a global Python executable would make every script run by that Python binary inherit broad access, which is too large a trust target for this tool."
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-runtime-shape-8": {
+      "id": "b-20-macos-scheduler-permissions-runtime-shape-8",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Runtime Shape"
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-python3-m-wisprsync-sc-9": {
+      "id": "b-20-macos-scheduler-permissions-python3-m-wisprsync-sc-9",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "python3 -m wisprsync schedule install",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " creates three local scheduler artifacts:"
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-text-10": {
+      "id": "b-20-macos-scheduler-permissions-text-10",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": "~/Library/LaunchAgents/com.codecaine.wispr_sync_runner.plist\n.wisprsync/WisprSync Runner.app/\n.wisprsync/runner-venv/"
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-the-launchagent-runs-onl-11": {
+      "id": "b-20-macos-scheduler-permissions-the-launchagent-runs-onl-11",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The LaunchAgent runs only the dedicated app bundle executable:"
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-text-12": {
+      "id": "b-20-macos-scheduler-permissions-text-12",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": ".wisprsync/WisprSync Runner.app/Contents/MacOS/wisprsync-runner"
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-that-executable-is-a-sma-13": {
+      "id": "b-20-macos-scheduler-permissions-that-executable-is-a-sma-13",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "That executable is a small shell script generated during install. It changes to the repository root and executes the private runtime:"
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-sh-14": {
+      "id": "b-20-macos-scheduler-permissions-sh-14",
+      "type": "code",
+      "props": {
+        "language": "sh"
+      },
+      "text": [
+        {
+          "insert": "exec .wisprsync/runner-venv/bin/python -m wisprsync sync \"$@\""
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-the-private-runtime-is-c-15": {
+      "id": "b-20-macos-scheduler-permissions-the-private-runtime-is-c-15",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The private runtime is created with Python's standard "
+        },
+        {
+          "insert": "venv",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " module using "
+        },
+        {
+          "insert": "with_pip=False",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " and "
+        },
+        {
+          "insert": "symlinks=False",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": ". This creates a local Python copy for the scheduled runner without installing package-management tooling into that runtime."
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-permission-boundary-16": {
+      "id": "b-20-macos-scheduler-permissions-permission-boundary-16",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Permission Boundary"
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-the-intended-permission-17": {
+      "id": "b-20-macos-scheduler-permissions-the-intended-permission-17",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The intended permission target is:"
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-text-18": {
+      "id": "b-20-macos-scheduler-permissions-text-18",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": ".wisprsync/WisprSync Runner.app"
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-if-macos-blocks-the-sche-19": {
+      "id": "b-20-macos-scheduler-permissions-if-macos-blocks-the-sche-19",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "If macOS blocks the scheduled job, grant privacy access to that app bundle, not to "
+        },
+        {
+          "insert": "/usr/bin/python3",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": ", Xcode Python, Anaconda Python, or another shared interpreter."
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-this-does-not-create-per-20": {
+      "id": "b-20-macos-scheduler-permissions-this-does-not-create-per-20",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "This does not create perfect path-level sandboxing. macOS privacy controls are still process based. The improvement is that the process receiving access is a repo-local WisprSync runner whose only generated command path is "
+        },
+        {
+          "insert": "wisprsync sync",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": ", backed by a private runtime inside "
+        },
+        {
+          "insert": ".wisprsync/",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": "."
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-install-flow-21": {
+      "id": "b-20-macos-scheduler-permissions-install-flow-21",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Install Flow"
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-schedule-installation-is-22": {
+      "id": "b-20-macos-scheduler-permissions-schedule-installation-is-22",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Schedule installation is implemented in "
+        },
+        {
+          "insert": "wisprsync/sync/schedule.py",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": "."
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-the-install-sequence-is-23": {
+      "id": "b-20-macos-scheduler-permissions-the-install-sequence-is-23",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The install sequence is:"
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-create-wisprsync-runne-24": {
+      "id": "b-20-macos-scheduler-permissions-create-wisprsync-runne-24",
+      "type": "list-item",
+      "props": {
+        "ordered": true
+      },
+      "text": [
+        {
+          "insert": "Create "
+        },
+        {
+          "insert": ".wisprsync/runner-venv",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " if its Python executable is missing."
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-generate-wisprsync-wis-25": {
+      "id": "b-20-macos-scheduler-permissions-generate-wisprsync-wis-25",
+      "type": "list-item",
+      "props": {
+        "ordered": true
+      },
+      "text": [
+        {
+          "insert": "Generate "
+        },
+        {
+          "insert": ".wisprsync/WisprSync Runner.app/Contents/Info.plist",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": "."
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-generate-wisprsync-wis-26": {
+      "id": "b-20-macos-scheduler-permissions-generate-wisprsync-wis-26",
+      "type": "list-item",
+      "props": {
+        "ordered": true
+      },
+      "text": [
+        {
+          "insert": "Generate "
+        },
+        {
+          "insert": ".wisprsync/WisprSync Runner.app/Contents/MacOS/wisprsync-runner",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": "."
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-write-library-launcha-27": {
+      "id": "b-20-macos-scheduler-permissions-write-library-launcha-27",
+      "type": "list-item",
+      "props": {
+        "ordered": true
+      },
+      "text": [
+        {
+          "insert": "Write "
+        },
+        {
+          "insert": "~/Library/LaunchAgents/com.codecaine.wispr_sync_runner.plist",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": "."
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-unload-any-existing-job-28": {
+      "id": "b-20-macos-scheduler-permissions-unload-any-existing-job-28",
+      "type": "list-item",
+      "props": {
+        "ordered": true
+      },
+      "text": [
+        {
+          "insert": "Unload any existing job for the same label."
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-load-the-new-launchagent-29": {
+      "id": "b-20-macos-scheduler-permissions-load-the-new-launchagent-29",
+      "type": "list-item",
+      "props": {
+        "ordered": true
+      },
+      "text": [
+        {
+          "insert": "Load the new LaunchAgent."
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-the-launchagent-keeps-th-30": {
+      "id": "b-20-macos-scheduler-permissions-the-launchagent-keeps-th-30",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The LaunchAgent keeps the existing schedule contract: daily at "
+        },
+        {
+          "insert": "00:00",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " local time, stdout to "
+        },
+        {
+          "insert": ".wisprsync/schedule.out.log",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": ", and stderr to "
+        },
+        {
+          "insert": ".wisprsync/schedule.err.log",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": "."
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-verification-31": {
+      "id": "b-20-macos-scheduler-permissions-verification-31",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Verification"
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-after-install-verify-th-32": {
+      "id": "b-20-macos-scheduler-permissions-after-install-verify-th-32",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "After install, verify the LaunchAgent target:"
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-sh-33": {
+      "id": "b-20-macos-scheduler-permissions-sh-33",
+      "type": "code",
+      "props": {
+        "language": "sh"
+      },
+      "text": [
+        {
+          "insert": "plutil -p ~/Library/LaunchAgents/com.codecaine.wispr_sync_runner.plist"
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-the-programarguments-e-34": {
+      "id": "b-20-macos-scheduler-permissions-the-programarguments-e-34",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The "
+        },
+        {
+          "insert": "ProgramArguments",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " entry should point at:"
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-text-35": {
+      "id": "b-20-macos-scheduler-permissions-text-35",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": ".wisprsync/WisprSync Runner.app/Contents/MacOS/wisprsync-runner"
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-kick-the-job-manually-36": {
+      "id": "b-20-macos-scheduler-permissions-kick-the-job-manually-36",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Kick the job manually:"
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-sh-37": {
+      "id": "b-20-macos-scheduler-permissions-sh-37",
+      "type": "code",
+      "props": {
+        "language": "sh"
+      },
+      "text": [
+        {
+          "insert": "launchctl kickstart -k gui/$(id -u)/com.codecaine.wispr_sync_runner"
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-then-check-logs-and-stat-38": {
+      "id": "b-20-macos-scheduler-permissions-then-check-logs-and-stat-38",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Then check logs and status:"
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-sh-39": {
+      "id": "b-20-macos-scheduler-permissions-sh-39",
+      "type": "code",
+      "props": {
+        "language": "sh"
+      },
+      "text": [
+        {
+          "insert": "tail -n 80 .wisprsync/schedule.err.log\ntail -n 30 .wisprsync/schedule.out.log\nlaunchctl list com.codecaine.wispr_sync_runner"
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-a-healthy-run-has-laste-40": {
+      "id": "b-20-macos-scheduler-permissions-a-healthy-run-has-laste-40",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "A healthy run has "
+        },
+        {
+          "insert": "LastExitStatus = 0",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": ", no permission traceback in "
+        },
+        {
+          "insert": "schedule.err.log",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": ", and a normal sync summary in "
+        },
+        {
+          "insert": "schedule.out.log",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": "."
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-failure-modes-41": {
+      "id": "b-20-macos-scheduler-permissions-failure-modes-41",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Failure Modes"
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-if-the-run-fails-with-u-42": {
+      "id": "b-20-macos-scheduler-permissions-if-the-run-fails-with-u-42",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "If the run fails with "
+        },
+        {
+          "insert": "unable to open database file",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": ", macOS probably denied access to the Wispr Flow source database."
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-if-the-run-fails-with-o-43": {
+      "id": "b-20-macos-scheduler-permissions-if-the-run-fails-with-o-43",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "If the run fails with "
+        },
+        {
+          "insert": "Operation not permitted",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " while writing under the output folder, macOS probably denied access to the export target."
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-in-either-case-the-firs-44": {
+      "id": "b-20-macos-scheduler-permissions-in-either-case-the-firs-44",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "In either case, the first permission target to try is the dedicated runner app:"
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-text-45": {
+      "id": "b-20-macos-scheduler-permissions-text-45",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": ".wisprsync/WisprSync Runner.app"
+        }
+      ],
+      "children": []
+    },
+    "b-20-macos-scheduler-permissions-after-granting-access-k-46": {
+      "id": "b-20-macos-scheduler-permissions-after-granting-access-k-46",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "After granting access, kick the LaunchAgent again and confirm the next run report is successful."
+        }
+      ],
+      "children": []
+    }
+  }
+}

@@ -1,0 +1,184 @@
+{
+  "schemaVersion": 1,
+  "id": "00-foundation-30-boundaries",
+  "title": "Boundaries",
+  "root": "b-30-boundaries-root-14",
+  "blocks": {
+    "b-30-boundaries-root-14": {
+      "id": "b-30-boundaries-root-14",
+      "type": "paragraph",
+      "props": {
+        "concepts": [
+          "boundaries",
+          "non-affiliation",
+          "safety"
+        ],
+        "covers": "What WisprSync is and is not responsible for.",
+        "depends-on": [
+          "00-foundation/10-backstory.md",
+          "00-foundation/20-principles.md"
+        ]
+      },
+      "children": [
+        "b-30-boundaries-wisprsync-is-a-local-exp-2",
+        "b-30-boundaries-divider-3",
+        "b-30-boundaries-not-affiliated-with-wisp-4",
+        "b-30-boundaries-wisprsync-is-not-affilia-5",
+        "b-30-boundaries-not-a-wispr-flow-restore-6",
+        "b-30-boundaries-wisprsync-exports-data-o-7",
+        "b-30-boundaries-not-a-raw-app-data-backu-8",
+        "b-30-boundaries-wisprsync-should-not-tre-9",
+        "b-30-boundaries-not-automatic-publishing-10",
+        "b-30-boundaries-the-base-export-writes-t-11",
+        "b-30-boundaries-not-a-permanent-schema-c-12",
+        "b-30-boundaries-wispr-flow-can-change-it-13"
+      ]
+    },
+    "b-30-boundaries-wisprsync-is-a-local-exp-2": {
+      "id": "b-30-boundaries-wisprsync-is-a-local-exp-2",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "WisprSync is a local exporter for data already present on the user's machine. It is not an official Wispr Flow feature, not a cloud API client, and not a restore tool."
+        }
+      ],
+      "children": []
+    },
+    "b-30-boundaries-divider-3": {
+      "id": "b-30-boundaries-divider-3",
+      "type": "divider",
+      "props": {},
+      "children": []
+    },
+    "b-30-boundaries-not-affiliated-with-wisp-4": {
+      "id": "b-30-boundaries-not-affiliated-with-wisp-4",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Not Affiliated With Wispr Flow"
+        }
+      ],
+      "children": []
+    },
+    "b-30-boundaries-wisprsync-is-not-affilia-5": {
+      "id": "b-30-boundaries-wisprsync-is-not-affilia-5",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "WisprSync is not affiliated with, endorsed by, or supported by Wispr Flow. Users run it at their own risk."
+        }
+      ],
+      "children": []
+    },
+    "b-30-boundaries-not-a-wispr-flow-restore-6": {
+      "id": "b-30-boundaries-not-a-wispr-flow-restore-6",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Not A Wispr Flow Restore Tool"
+        }
+      ],
+      "children": []
+    },
+    "b-30-boundaries-wisprsync-exports-data-o-7": {
+      "id": "b-30-boundaries-wisprsync-exports-data-o-7",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "WisprSync exports data out of local Wispr Flow storage. It does not write data back into Wispr Flow."
+        }
+      ],
+      "children": []
+    },
+    "b-30-boundaries-not-a-raw-app-data-backu-8": {
+      "id": "b-30-boundaries-not-a-raw-app-data-backu-8",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Not A Raw App Data Backup"
+        }
+      ],
+      "children": []
+    },
+    "b-30-boundaries-wisprsync-should-not-tre-9": {
+      "id": "b-30-boundaries-wisprsync-should-not-tre-9",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "WisprSync should not treat the full Wispr Flow application support folder as the export. Cookies, sessions, caches, telemetry folders, and SQLite source snapshots are outside the canonical export."
+        }
+      ],
+      "children": []
+    },
+    "b-30-boundaries-not-automatic-publishing-10": {
+      "id": "b-30-boundaries-not-automatic-publishing-10",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Not Automatic Publishing"
+        }
+      ],
+      "children": []
+    },
+    "b-30-boundaries-the-base-export-writes-t-11": {
+      "id": "b-30-boundaries-the-base-export-writes-t-11",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The base export writes to a folder. Git commits, GitHub pushes, object storage uploads, or other remote sync behaviors should be explicit layers."
+        }
+      ],
+      "children": []
+    },
+    "b-30-boundaries-not-a-permanent-schema-c-12": {
+      "id": "b-30-boundaries-not-a-permanent-schema-c-12",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Not A Permanent Schema Contract"
+        }
+      ],
+      "children": []
+    },
+    "b-30-boundaries-wispr-flow-can-change-it-13": {
+      "id": "b-30-boundaries-wispr-flow-can-change-it-13",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Wispr Flow can change its local storage paths or SQLite schema. The dated local storage reference in "
+        },
+        {
+          "insert": ".codex/skills/wisprsync/reference/",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " should be updated when that happens."
+        }
+      ],
+      "children": []
+    }
+  }
+}

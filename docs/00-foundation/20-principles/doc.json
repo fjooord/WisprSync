@@ -1,0 +1,174 @@
+{
+  "schemaVersion": 1,
+  "id": "00-foundation-20-principles",
+  "title": "Principles",
+  "root": "b-20-principles-root-14",
+  "blocks": {
+    "b-20-principles-root-14": {
+      "id": "b-20-principles-root-14",
+      "type": "paragraph",
+      "props": {
+        "concepts": [
+          "principles",
+          "ownership",
+          "local-first"
+        ],
+        "covers": "The core principles that guide WisprSync as a local data ownership tool.",
+        "depends-on": [
+          "00-foundation/10-backstory.md"
+        ]
+      },
+      "children": [
+        "b-20-principles-wisprsync-is-guided-by-a-2",
+        "b-20-principles-divider-3",
+        "b-20-principles-data-ownership-4",
+        "b-20-principles-if-transcript-data-is-al-5",
+        "b-20-principles-local-first-6",
+        "b-20-principles-the-base-export-path-wri-7",
+        "b-20-principles-transparent-formats-8",
+        "b-20-principles-the-export-should-use-pl-9",
+        "b-20-principles-explicit-sync-10",
+        "b-20-principles-wisprsync-should-not-com-11",
+        "b-20-principles-safe-defaults-12",
+        "b-20-principles-the-exporter-should-avoi-13"
+      ]
+    },
+    "b-20-principles-wisprsync-is-guided-by-a-2": {
+      "id": "b-20-principles-wisprsync-is-guided-by-a-2",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "WisprSync is guided by a small set of principles: local data ownership, transparent export formats, and explicit user control over where exported data goes."
+        }
+      ],
+      "children": []
+    },
+    "b-20-principles-divider-3": {
+      "id": "b-20-principles-divider-3",
+      "type": "divider",
+      "props": {},
+      "children": []
+    },
+    "b-20-principles-data-ownership-4": {
+      "id": "b-20-principles-data-ownership-4",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Data Ownership"
+        }
+      ],
+      "children": []
+    },
+    "b-20-principles-if-transcript-data-is-al-5": {
+      "id": "b-20-principles-if-transcript-data-is-al-5",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "If transcript data is already on the user's device, the user should be able to inspect it, back it up, analyze it, and move it into their own workflows."
+        }
+      ],
+      "children": []
+    },
+    "b-20-principles-local-first-6": {
+      "id": "b-20-principles-local-first-6",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Local First"
+        }
+      ],
+      "children": []
+    },
+    "b-20-principles-the-base-export-path-wri-7": {
+      "id": "b-20-principles-the-base-export-path-wri-7",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The base export path writes to a folder the user controls. Cloud sync or future remote targets should layer on top of that folder export instead of replacing it."
+        }
+      ],
+      "children": []
+    },
+    "b-20-principles-transparent-formats-8": {
+      "id": "b-20-principles-transparent-formats-8",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Transparent Formats"
+        }
+      ],
+      "children": []
+    },
+    "b-20-principles-the-export-should-use-pl-9": {
+      "id": "b-20-principles-the-export-should-use-pl-9",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The export should use plain files and documented structures: JSON, JSONL, text files, WAV audio, PNG screenshots, manifests, and run reports."
+        }
+      ],
+      "children": []
+    },
+    "b-20-principles-explicit-sync-10": {
+      "id": "b-20-principles-explicit-sync-10",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Explicit Sync"
+        }
+      ],
+      "children": []
+    },
+    "b-20-principles-wisprsync-should-not-com-11": {
+      "id": "b-20-principles-wisprsync-should-not-com-11",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "WisprSync should not commit, push, upload, or delete exported data unless the user explicitly chooses that behavior."
+        }
+      ],
+      "children": []
+    },
+    "b-20-principles-safe-defaults-12": {
+      "id": "b-20-principles-safe-defaults-12",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Safe Defaults"
+        }
+      ],
+      "children": []
+    },
+    "b-20-principles-the-exporter-should-avoi-13": {
+      "id": "b-20-principles-the-exporter-should-avoi-13",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The exporter should avoid raw app folders, cookies, sessions, caches, telemetry files, and local machine config. The canonical export should contain transcript data and related artifacts, not private application runtime state."
+        }
+      ],
+      "children": []
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "id": "ent_01M4F6XQRTDENMGADJNQN15FVD",
+  "name": "WisprSync",
+  "kind": "app",
+  "docsRoot": "docs",
+  "products": [
+    "docs"
+  ]
+}

@@ -1,0 +1,1151 @@
+{
+  "schemaVersion": 1,
+  "id": "20-implementation-10-export-pipeline-10-source-to-record-mapping",
+  "title": "Source To Record Mapping",
+  "root": "b-10-source-to-record-mapping-root-47",
+  "blocks": {
+    "b-10-source-to-record-mapping-root-47": {
+      "id": "b-10-source-to-record-mapping-root-47",
+      "type": "paragraph",
+      "props": {
+        "concepts": [
+          "metadata",
+          "indexes",
+          "hashing",
+          "records"
+        ],
+        "covers": "How current WisprSync code maps History rows into metadata, record files, indexes, manifests, and run reports.",
+        "depends-on": [
+          "20-implementation/10-export-pipeline/00-overview.md"
+        ],
+        "design_refs": [
+          "10-system-design/10-data-structure/10-wispr-flow-source-shape.md",
+          "10-system-design/10-data-structure/20-wisprsync-output-shape.md",
+          "10-system-design/20-exporting/10-folder-export.md"
+        ]
+      },
+      "children": [
+        "b-10-source-to-record-mapping-the-source-to-record-map-2",
+        "b-10-source-to-record-mapping-divider-3",
+        "b-10-source-to-record-mapping-source-selection-4",
+        "b-10-source-to-record-mapping-wisprsync-source-sqlite-5",
+        "b-10-source-to-record-mapping-the-exported-history-c-6",
+        "b-10-source-to-record-mapping-record-naming-7",
+        "b-10-source-to-record-mapping-record-parts-in-wis-8",
+        "b-10-source-to-record-mapping-text-9",
+        "b-10-source-to-record-mapping-if-timestamp-parsing-fai-10",
+        "b-10-source-to-record-mapping-text-11",
+        "b-10-source-to-record-mapping-the-preflight-step-build-12",
+        "b-10-source-to-record-mapping-metadata-construction-13",
+        "b-10-source-to-record-mapping-build-metadata-in-w-14",
+        "b-10-source-to-record-mapping-metadata-table",
+        "b-10-source-to-record-mapping-text-fields-are-written-16",
+        "b-10-source-to-record-mapping-file-writing-17",
+        "b-10-source-to-record-mapping-write-record-in-wis-18",
+        "b-10-source-to-record-mapping-the-record-writer-create-19",
+        "b-10-source-to-record-mapping-metadata-json-for-ever-20",
+        "b-10-source-to-record-mapping-raw-transcript-txt-whe-21",
+        "b-10-source-to-record-mapping-formatted-transcript-tx-22",
+        "b-10-source-to-record-mapping-audio-wav-when-audio-23",
+        "b-10-source-to-record-mapping-screenshot-png-when-sc-24",
+        "b-10-source-to-record-mapping-index-generation-25",
+        "b-10-source-to-record-mapping-history-index-object-26",
+        "b-10-source-to-record-mapping-dictionary-rows-are-expo-27",
+        "b-10-source-to-record-mapping-manifest-and-run-reports-28",
+        "b-10-source-to-record-mapping-command-export-in-w-29",
+        "b-10-source-to-record-mapping-write-run-report-in-30",
+        "b-10-source-to-record-mapping-text-31",
+        "b-10-source-to-record-mapping-and-appends-a-compact-su-32",
+        "b-10-source-to-record-mapping-text-33",
+        "b-10-source-to-record-mapping-related-files-34",
+        "b-10-source-to-record-mapping-bin-sync-repo-local-35",
+        "b-10-source-to-record-mapping-wisprsync-cli-main-py-36",
+        "b-10-source-to-record-mapping-wisprsync-cli-commands-37",
+        "b-10-source-to-record-mapping-wisprsync-export-runner-38",
+        "b-10-source-to-record-mapping-wisprsync-export-metada-39",
+        "b-10-source-to-record-mapping-wisprsync-export-record-40",
+        "b-10-source-to-record-mapping-wisprsync-export-indexe-41",
+        "b-10-source-to-record-mapping-wisprsync-source-sqlite-42",
+        "b-10-source-to-record-mapping-wisprsync-source-discov-43",
+        "b-10-source-to-record-mapping-wisprsync-source-histor-44",
+        "b-10-source-to-record-mapping-wisprsync-validate-runn-45",
+        "b-10-source-to-record-mapping-wisprsync-validate-chec-46"
+      ]
+    },
+    "b-10-source-to-record-mapping-the-source-to-record-map-2": {
+      "id": "b-10-source-to-record-mapping-the-source-to-record-map-2",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The source-to-record mapping lives in the exporter and record helper modules. It reads a fixed set of "
+        },
+        {
+          "insert": "History",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " columns, converts each row into canonical metadata and optional files, and emits compact index rows for analysis."
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-divider-3": {
+      "id": "b-10-source-to-record-mapping-divider-3",
+      "type": "divider",
+      "props": {},
+      "children": []
+    },
+    "b-10-source-to-record-mapping-source-selection-4": {
+      "id": "b-10-source-to-record-mapping-source-selection-4",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Source Selection"
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-wisprsync-source-sqlite-5": {
+      "id": "b-10-source-to-record-mapping-wisprsync-source-sqlite-5",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "wisprsync/source/sqlite.py",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " defines read-only SQLite access, snapshot creation, and local snapshot retention. After each successful non-dry-run export, WisprSync keeps the latest source snapshot under "
+        },
+        {
+          "insert": ".wisprsync-cache/source-backups/",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " and prunes older local snapshots. "
+        },
+        {
+          "insert": "wisprsync/source/discovery.py",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " checks the known macOS database candidates and ranks valid Wispr Flow databases by "
+        },
+        {
+          "insert": "History",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " row count. "
+        },
+        {
+          "insert": "history_select_sql()",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " in "
+        },
+        {
+          "insert": "wisprsync/source/history.py",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " selects the configured "
+        },
+        {
+          "insert": "HISTORY_COLUMNS",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " in timestamp and ID order."
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-the-exported-history-c-6": {
+      "id": "b-10-source-to-record-mapping-the-exported-history-c-6",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The exported "
+        },
+        {
+          "insert": "History",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " columns are listed in "
+        },
+        {
+          "insert": "wisprsync/core/constants.py",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": ". They include identity, transcript text variants, status, app context, media blobs, quality fields, edit fields, language, platform, and timing fields."
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-record-naming-7": {
+      "id": "b-10-source-to-record-mapping-record-naming-7",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Record Naming"
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-record-parts-in-wis-8": {
+      "id": "b-10-source-to-record-mapping-record-parts-in-wis-8",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "record_parts()",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " in "
+        },
+        {
+          "insert": "wisprsync/export/records.py",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " converts a parsed UTC timestamp and record ID into:"
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-text-9": {
+      "id": "b-10-source-to-record-mapping-text-9",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": "records/YYYY/MM/DD/{timestamp_compact_utc}_{transcriptEntityId}/"
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-if-timestamp-parsing-fai-10": {
+      "id": "b-10-source-to-record-mapping-if-timestamp-parsing-fai-10",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "If timestamp parsing fails, the path uses:"
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-text-11": {
+      "id": "b-10-source-to-record-mapping-text-11",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": "records/unknown/unknown/unknown/unknown-time_{transcriptEntityId}/"
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-the-preflight-step-build-12": {
+      "id": "b-10-source-to-record-mapping-the-preflight-step-build-12",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The preflight step builds an existing record index from "
+        },
+        {
+          "insert": "metadata.json",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " files, checks duplicate source IDs, checks path collisions, and verifies that existing record directories contain the expected ID."
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-metadata-construction-13": {
+      "id": "b-10-source-to-record-mapping-metadata-construction-13",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Metadata Construction"
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-build-metadata-in-w-14": {
+      "id": "b-10-source-to-record-mapping-build-metadata-in-w-14",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "build_metadata()",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " in "
+        },
+        {
+          "insert": "wisprsync/export/metadata.py",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " is the central implementation of the canonical record object. It maps source fields into these metadata sections:"
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-metadata-table": {
+      "id": "b-10-source-to-record-mapping-metadata-table",
+      "type": "structured-table",
+      "props": {
+        "columns": [
+          "Metadata section",
+          "Source fields and computed values"
+        ],
+        "rows": [
+          [
+            [
+              {
+                "insert": "source",
+                "attributes": {
+                  "code": true
+                }
+              }
+            ],
+            "source app label, table name, primary key, database path"
+          ],
+          [
+            [
+              {
+                "insert": "timestamps",
+                "attributes": {
+                  "code": true
+                }
+              }
+            ],
+            "parsed UTC timestamp, local timestamp, timezone offset, export time"
+          ],
+          [
+            [
+              {
+                "insert": "status",
+                "attributes": {
+                  "code": true
+                }
+              }
+            ],
+            "Wispr status, edited text status, upload/share/archive flags"
+          ],
+          [
+            [
+              {
+                "insert": "text",
+                "attributes": {
+                  "code": true
+                }
+              }
+            ],
+            "ASR, formatted, edited, pasted, default, and fallback text variants"
+          ],
+          [
+            [
+              {
+                "insert": "text_stats",
+                "attributes": {
+                  "code": true
+                }
+              }
+            ],
+            "word count, duration, speech duration"
+          ],
+          [
+            [
+              {
+                "insert": "media",
+                "attributes": {
+                  "code": true
+                }
+              }
+            ],
+            "audio/screenshot presence, format, size, SHA-256"
+          ],
+          [
+            [
+              {
+                "insert": "context",
+                "attributes": {
+                  "code": true
+                }
+              }
+            ],
+            "target app, URL, additional context JSON, textbox contents, conversation, mic, language, platform, app version"
+          ],
+          [
+            [
+              {
+                "insert": "quality",
+                "attributes": {
+                  "code": true
+                }
+              }
+            ],
+            "latency, log probability, divergence scores, fallback/external-ASR flags"
+          ],
+          [
+            [
+              {
+                "insert": "edits",
+                "attributes": {
+                  "code": true
+                }
+              }
+            ],
+            "user edit metadata, corrected word count, dictionary replacement count, reverted-AI flag"
+          ],
+          [
+            [
+              {
+                "insert": "files",
+                "attributes": {
+                  "code": true
+                }
+              }
+            ],
+            "relative names for files present in the record directory"
+          ],
+          [
+            [
+              {
+                "insert": "integrity",
+                "attributes": {
+                  "code": true
+                }
+              }
+            ],
+            "source row hash, record content hash, exporter version"
+          ]
+        ],
+        "title": "Metadata sections"
+      },
+      "children": []
+    },
+    "b-10-source-to-record-mapping-text-fields-are-written-16": {
+      "id": "b-10-source-to-record-mapping-text-fields-are-written-16",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Text fields are written as separate files only for "
+        },
+        {
+          "insert": "asrText",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " and "
+        },
+        {
+          "insert": "formattedText",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": ". Other transcript variants remain in JSON metadata and JSONL indexes."
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-file-writing-17": {
+      "id": "b-10-source-to-record-mapping-file-writing-17",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "File Writing"
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-write-record-in-wis-18": {
+      "id": "b-10-source-to-record-mapping-write-record-in-wis-18",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "write_record()",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " in "
+        },
+        {
+          "insert": "wisprsync/export/records.py",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " creates a temporary sibling directory, writes the record contents into it, and atomically replaces the target record directory."
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-the-record-writer-create-19": {
+      "id": "b-10-source-to-record-mapping-the-record-writer-create-19",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The record writer creates:"
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-metadata-json-for-ever-20": {
+      "id": "b-10-source-to-record-mapping-metadata-json-for-ever-20",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "metadata.json",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " for every record,"
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-raw-transcript-txt-whe-21": {
+      "id": "b-10-source-to-record-mapping-raw-transcript-txt-whe-21",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "raw_transcript.txt",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " when "
+        },
+        {
+          "insert": "asrText",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " is non-empty,"
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-formatted-transcript-tx-22": {
+      "id": "b-10-source-to-record-mapping-formatted-transcript-tx-22",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "formatted_transcript.txt",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " when "
+        },
+        {
+          "insert": "formattedText",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " is non-empty,"
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-audio-wav-when-audio-23": {
+      "id": "b-10-source-to-record-mapping-audio-wav-when-audio-23",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "audio.wav",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " when "
+        },
+        {
+          "insert": "audio",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " is present,"
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-screenshot-png-when-sc-24": {
+      "id": "b-10-source-to-record-mapping-screenshot-png-when-sc-24",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "screenshot.png",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " when screenshots are enabled and "
+        },
+        {
+          "insert": "screenshot",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " is present."
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-index-generation-25": {
+      "id": "b-10-source-to-record-mapping-index-generation-25",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Index Generation"
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-history-index-object-26": {
+      "id": "b-10-source-to-record-mapping-history-index-object-26",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "history_index_object()",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " in "
+        },
+        {
+          "insert": "wisprsync/export/indexes.py",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " produces one compact JSON object per exported "
+        },
+        {
+          "insert": "History",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " row. The object includes the key analysis fields, relative paths to generated files, media hashes, the record directory path, and "
+        },
+        {
+          "insert": "source_row_sha256",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": "."
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-dictionary-rows-are-expo-27": {
+      "id": "b-10-source-to-record-mapping-dictionary-rows-are-expo-27",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Dictionary rows are exported separately through "
+        },
+        {
+          "insert": "dictionary_row_to_object()",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " in "
+        },
+        {
+          "insert": "wisprsync/export/indexes.py",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " and written to "
+        },
+        {
+          "insert": "indexes/dictionary.jsonl",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": ". Dictionary export uses configured "
+        },
+        {
+          "insert": "DICTIONARY_COLUMNS",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " and sorts by phrase and ID."
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-manifest-and-run-reports-28": {
+      "id": "b-10-source-to-record-mapping-manifest-and-run-reports-28",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Manifest And Run Reports"
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-command-export-in-w-29": {
+      "id": "b-10-source-to-record-mapping-command-export-in-w-29",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "command_export()",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " in "
+        },
+        {
+          "insert": "wisprsync/export/runner.py",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " writes "
+        },
+        {
+          "insert": "manifest.json",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " with dataset timestamps, source database path, counts, date range, index paths, latest run, and index hashes."
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-write-run-report-in-30": {
+      "id": "b-10-source-to-record-mapping-write-run-report-in-30",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "write_run_report()",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " in "
+        },
+        {
+          "insert": "wisprsync/export/indexes.py",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " stores the full run report under:"
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-text-31": {
+      "id": "b-10-source-to-record-mapping-text-31",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": "runs/YYYY/MM/DD/{run_id}.json"
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-and-appends-a-compact-su-32": {
+      "id": "b-10-source-to-record-mapping-and-appends-a-compact-su-32",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "and appends a compact summary to:"
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-text-33": {
+      "id": "b-10-source-to-record-mapping-text-33",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": "indexes/runs.jsonl"
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-related-files-34": {
+      "id": "b-10-source-to-record-mapping-related-files-34",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Related Files"
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-bin-sync-repo-local-35": {
+      "id": "b-10-source-to-record-mapping-bin-sync-repo-local-35",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "bin/sync",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " - repo-local entry point for sync."
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-wisprsync-cli-main-py-36": {
+      "id": "b-10-source-to-record-mapping-wisprsync-cli-main-py-36",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "wisprsync/cli/main.py",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " - CLI parser and command dispatch."
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-wisprsync-cli-commands-37": {
+      "id": "b-10-source-to-record-mapping-wisprsync-cli-commands-37",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "wisprsync/cli/commands.py",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " - setup, sync, and doctor command functions."
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-wisprsync-export-runner-38": {
+      "id": "b-10-source-to-record-mapping-wisprsync-export-runner-38",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "wisprsync/export/runner.py",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " - export loop, manifest construction, and run status handling."
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-wisprsync-export-metada-39": {
+      "id": "b-10-source-to-record-mapping-wisprsync-export-metada-39",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "wisprsync/export/metadata.py",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " - metadata object construction and source/content hashes."
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-wisprsync-export-record-40": {
+      "id": "b-10-source-to-record-mapping-wisprsync-export-record-40",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "wisprsync/export/records.py",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " - record naming, existing-record indexing, preflight checks, and atomic record writes."
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-wisprsync-export-indexe-41": {
+      "id": "b-10-source-to-record-mapping-wisprsync-export-indexe-41",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "wisprsync/export/indexes.py",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " - history index objects, dictionary index objects, run report writing, and run summaries."
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-wisprsync-source-sqlite-42": {
+      "id": "b-10-source-to-record-mapping-wisprsync-source-sqlite-42",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "wisprsync/source/sqlite.py",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " - read-only SQLite connection and snapshot handling."
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-wisprsync-source-discov-43": {
+      "id": "b-10-source-to-record-mapping-wisprsync-source-discov-43",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "wisprsync/source/discovery.py",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " - source database discovery."
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-wisprsync-source-histor-44": {
+      "id": "b-10-source-to-record-mapping-wisprsync-source-histor-44",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "wisprsync/source/history.py",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " - History row selection and row conversion."
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-wisprsync-validate-runn-45": {
+      "id": "b-10-source-to-record-mapping-wisprsync-validate-runn-45",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "wisprsync/validate/runner.py",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " - validation command orchestration."
+        }
+      ],
+      "children": []
+    },
+    "b-10-source-to-record-mapping-wisprsync-validate-chec-46": {
+      "id": "b-10-source-to-record-mapping-wisprsync-validate-chec-46",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "wisprsync/validate/checks.py",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " - validation of manifest, indexes, records, hashes, and missing files."
+        }
+      ],
+      "children": []
+    }
+  }
+}

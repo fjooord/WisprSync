@@ -1,0 +1,374 @@
+{
+  "schemaVersion": 1,
+  "id": "20-implementation-10-export-pipeline-00-overview",
+  "title": "Export Pipeline",
+  "root": "b-00-overview-root-23",
+  "blocks": {
+    "b-00-overview-root-23": {
+      "id": "b-00-overview-root-23",
+      "type": "paragraph",
+      "props": {
+        "code-ref": "wisprsync/",
+        "concepts": [
+          "export-pipeline",
+          "records",
+          "indexes"
+        ],
+        "covers": "The code paths that read Wispr Flow data and write canonical WisprSync export records.",
+        "design_refs": [
+          "10-system-design/10-data-structure/20-wisprsync-output-shape.md",
+          "10-system-design/20-exporting/10-folder-export.md"
+        ],
+        "type": "overview"
+      },
+      "children": [
+        "b-00-overview-the-export-pipeline-is-r-2",
+        "b-00-overview-divider-3",
+        "b-00-overview-file-tree-4",
+        "b-00-overview-text-5",
+        "b-00-overview-section-scope-6",
+        "b-00-overview-what-this-section-owns-7",
+        "b-00-overview-the-current-code-path-fr-8",
+        "b-00-overview-the-mapping-from-selecte-9",
+        "b-00-overview-the-update-semantics-imp-10",
+        "b-00-overview-validation-checks-agains-11",
+        "b-00-overview-what-this-section-does-n-12",
+        "b-00-overview-the-design-level-meaning-13",
+        "b-00-overview-user-facing-setup-goals-14",
+        "b-00-overview-git-commit-push-or-rep-15",
+        "b-00-overview-architecture-16",
+        "b-00-overview-bin-sync-and-bin-17",
+        "b-00-overview-export-flow-18",
+        "b-00-overview-text-19",
+        "b-00-overview-child-nodes-20",
+        "b-00-overview-source-to-record-mappin-21",
+        "b-00-overview-documents-the-implementa-22"
+      ]
+    },
+    "b-00-overview-the-export-pipeline-is-r-2": {
+      "id": "b-00-overview-the-export-pipeline-is-r-2",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The export pipeline is responsible for turning read-only Wispr Flow SQLite rows into the canonical "
+        },
+        {
+          "insert": "data/",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " tree. It owns source selection, preflight collision checks, row-to-record normalization, atomic record writes, index generation, manifest writing, run reports, and validation entry points."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-divider-3": {
+      "id": "b-00-overview-divider-3",
+      "type": "divider",
+      "props": {},
+      "children": []
+    },
+    "b-00-overview-file-tree-4": {
+      "id": "b-00-overview-file-tree-4",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "File Tree"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-text-5": {
+      "id": "b-00-overview-text-5",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": "wisprsync/\n├── cli/                        CLI parser and command functions\n├── core/                       Shared config, constants, paths, and errors\n├── source/                     Source discovery, SQLite access, and History selection\n├── export/                     Export orchestration, metadata, records, media, and indexes\n├── support/                    Filesystem, hash, JSON, and time helpers\n└── validate/                   Exported data folder validation"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-section-scope-6": {
+      "id": "b-00-overview-section-scope-6",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Section Scope"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-what-this-section-owns-7": {
+      "id": "b-00-overview-what-this-section-owns-7",
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "text": [
+        {
+          "insert": "What This Section Owns"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-the-current-code-path-fr-8": {
+      "id": "b-00-overview-the-current-code-path-fr-8",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "The current code path from CLI command to exported files."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-the-mapping-from-selecte-9": {
+      "id": "b-00-overview-the-mapping-from-selecte-9",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "The mapping from selected source rows to metadata, media, transcript files, and JSONL index rows."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-the-update-semantics-imp-10": {
+      "id": "b-00-overview-the-update-semantics-imp-10",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "The update semantics implemented through source hashes and existing record indexes."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-validation-checks-agains-11": {
+      "id": "b-00-overview-validation-checks-agains-11",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "Validation checks against the generated data folder."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-what-this-section-does-n-12": {
+      "id": "b-00-overview-what-this-section-does-n-12",
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "text": [
+        {
+          "insert": "What This Section Does Not Own"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-the-design-level-meaning-13": {
+      "id": "b-00-overview-the-design-level-meaning-13",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "The design-level meaning of the data structure."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-user-facing-setup-goals-14": {
+      "id": "b-00-overview-user-facing-setup-goals-14",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "User-facing setup goals and local configuration policy."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-git-commit-push-or-rep-15": {
+      "id": "b-00-overview-git-commit-push-or-rep-15",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "Git commit, push, or repository sync behavior."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-architecture-16": {
+      "id": "b-00-overview-architecture-16",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Architecture"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-bin-sync-and-bin-17": {
+      "id": "b-00-overview-bin-sync-and-bin-17",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "./bin/sync",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " and "
+        },
+        {
+          "insert": "./bin/setup",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " are thin shell wrappers. They change into the repository root and execute "
+        },
+        {
+          "insert": "python3 -m wisprsync",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": ", which enters "
+        },
+        {
+          "insert": "wisprsync/cli/main.py",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": "."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-export-flow-18": {
+      "id": "b-00-overview-export-flow-18",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Export flow:"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-text-19": {
+      "id": "b-00-overview-text-19",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": "bin/sync\n└── python3 -m wisprsync sync\n    └── wisprsync.cli.commands.command_sync()\n        ├── wisprsync.export.runner.command_export()\n        │   ├── load config and choose source\n        │   ├── create SQLite snapshot or immutable read fallback\n        │   ├── preflight source and existing records\n        │   ├── build/write records\n        │   ├── write indexes and manifest\n        │   ├── prune older local source snapshots\n        │   └── write run report\n        └── wisprsync.validate.runner.command_validate()"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-child-nodes-20": {
+      "id": "b-00-overview-child-nodes-20",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Child Nodes"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-source-to-record-mappin-21": {
+      "id": "b-00-overview-source-to-record-mappin-21",
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "text": [
+        {
+          "insert": "Source To Record Mapping",
+          "attributes": {
+            "reference": {
+              "kind": "doc",
+              "path": "20-implementation/10-export-pipeline/10-source-to-record-mapping",
+              "label": "Source To Record Mapping"
+            }
+          }
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-documents-the-implementa-22": {
+      "id": "b-00-overview-documents-the-implementa-22",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Documents the implementation details that map a "
+        },
+        {
+          "insert": "History",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " row to "
+        },
+        {
+          "insert": "metadata.json",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": ", transcript files, media files, JSONL index rows, and change detection hashes."
+        }
+      ],
+      "children": []
+    }
+  }
+}

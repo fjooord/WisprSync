@@ -1,0 +1,642 @@
+{
+  "schemaVersion": 1,
+  "id": "10-system-design-10-data-structure-20-wisprsync-output-shape",
+  "title": "WisprSync Output Shape",
+  "root": "b-20-wisprsync-output-shape-root-36",
+  "blocks": {
+    "b-20-wisprsync-output-shape-root-36": {
+      "id": "b-20-wisprsync-output-shape-root-36",
+      "type": "paragraph",
+      "props": {
+        "concepts": [
+          "wisprsync",
+          "output",
+          "metadata",
+          "indexes",
+          "file-tree"
+        ],
+        "covers": "The canonical WisprSync output shape for records, metadata, indexes, manifests, and run reports.",
+        "depends-on": [
+          "10-system-design/10-data-structure/10-wispr-flow-source-shape.md"
+        ]
+      },
+      "children": [
+        "b-20-wisprsync-output-shape-wisprsync-turns-wispr-fl-2",
+        "b-20-wisprsync-output-shape-divider-3",
+        "b-20-wisprsync-output-shape-parsed-record-shape-4",
+        "b-20-wisprsync-output-shape-wisprsync-parses-each-h-5",
+        "b-20-wisprsync-output-shape-text-6",
+        "b-20-wisprsync-output-shape-transcript-option-files-7",
+        "b-20-wisprsync-output-shape-fields-that-are-not-firs-8",
+        "b-20-wisprsync-output-shape-metadata-object-9",
+        "b-20-wisprsync-output-shape-the-canonical-metadata-s-10",
+        "b-20-wisprsync-output-shape-json-11",
+        "b-20-wisprsync-output-shape-file-tree-layout-12",
+        "b-20-wisprsync-output-shape-the-default-export-root-13",
+        "b-20-wisprsync-output-shape-text-14",
+        "b-20-wisprsync-output-shape-example-record-path-15",
+        "b-20-wisprsync-output-shape-text-16",
+        "b-20-wisprsync-output-shape-the-date-folders-come-fr-17",
+        "b-20-wisprsync-output-shape-text-18",
+        "b-20-wisprsync-output-shape-indexes-19",
+        "b-20-wisprsync-output-shape-indexes-history-jsonl-20",
+        "b-20-wisprsync-output-shape-indexes-dictionary-json-21",
+        "b-20-wisprsync-output-shape-indexes-runs-jsonl-app-22",
+        "b-20-wisprsync-output-shape-manifest-and-run-reports-23",
+        "b-20-wisprsync-output-shape-manifest-json-describe-24",
+        "b-20-wisprsync-output-shape-each-run-writes-a-full-r-25",
+        "b-20-wisprsync-output-shape-text-26",
+        "b-20-wisprsync-output-shape-the-run-report-records-t-27",
+        "b-20-wisprsync-output-shape-placement-rules-28",
+        "b-20-wisprsync-output-shape-metadata-json-is-requi-29",
+        "b-20-wisprsync-output-shape-transcript-option-files-30",
+        "b-20-wisprsync-output-shape-media-files-are-created-31",
+        "b-20-wisprsync-output-shape-blob-bytes-are-never-emb-32",
+        "b-20-wisprsync-output-shape-paths-inside-indexes-are-33",
+        "b-20-wisprsync-output-shape-source-rows-that-disappe-34",
+        "b-20-wisprsync-output-shape-raw-wispr-flow-app-folde-35"
+      ]
+    },
+    "b-20-wisprsync-output-shape-wisprsync-turns-wispr-fl-2": {
+      "id": "b-20-wisprsync-output-shape-wisprsync-turns-wispr-fl-2",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "WisprSync turns Wispr Flow's local SQLite rows into a canonical "
+        },
+        {
+          "insert": "data/",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " folder that is easy to own, search, validate, and load into analysis tools. The output structure is designed around one durable identity, "
+        },
+        {
+          "insert": "History.transcriptEntityId",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": ", with large blobs stored as normal files and query-friendly JSONL indexes generated alongside per-record folders."
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-divider-3": {
+      "id": "b-20-wisprsync-output-shape-divider-3",
+      "type": "divider",
+      "props": {},
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-parsed-record-shape-4": {
+      "id": "b-20-wisprsync-output-shape-parsed-record-shape-4",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Parsed Record Shape"
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-wisprsync-parses-each-h-5": {
+      "id": "b-20-wisprsync-output-shape-wisprsync-parses-each-h-5",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "WisprSync parses each "
+        },
+        {
+          "insert": "History",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " row into one canonical record. The record has a structured "
+        },
+        {
+          "insert": "metadata.json",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": ", optional text files, optional media files, and a compact row in "
+        },
+        {
+          "insert": "indexes/history.jsonl",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": "."
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-text-6": {
+      "id": "b-20-wisprsync-output-shape-text-6",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": "record\n├── metadata.json              canonical structured object\n├── raw_transcript.txt         optional text from History.asrText\n├── formatted_transcript.txt   optional text from History.formattedText\n├── audio.wav                  optional bytes from History.audio\n└── screenshot.png             optional bytes from History.screenshot"
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-transcript-option-files-7": {
+      "id": "b-20-wisprsync-output-shape-transcript-option-files-7",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Transcript option files are convenience artifacts for direct search and reading. They contain only the source text value. They do not include labels, separators, or metadata."
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-fields-that-are-not-firs-8": {
+      "id": "b-20-wisprsync-output-shape-fields-that-are-not-firs-8",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Fields that are not first-class files stay in "
+        },
+        {
+          "insert": "metadata.json",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " and "
+        },
+        {
+          "insert": "indexes/history.jsonl",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": ". This includes "
+        },
+        {
+          "insert": "editedText",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": ", "
+        },
+        {
+          "insert": "pastedText",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": ", fallback/default transcript variants, app context, URLs, timings, language, quality metadata, and edit metadata."
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-metadata-object-9": {
+      "id": "b-20-wisprsync-output-shape-metadata-object-9",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Metadata Object"
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-the-canonical-metadata-s-10": {
+      "id": "b-20-wisprsync-output-shape-the-canonical-metadata-s-10",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The canonical metadata shape is:"
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-json-11": {
+      "id": "b-20-wisprsync-output-shape-json-11",
+      "type": "code",
+      "props": {
+        "language": "json"
+      },
+      "text": [
+        {
+          "insert": "{\n  \"schema_version\": 1,\n  \"id\": \"transcriptEntityId\",\n  \"source\": {\n    \"app\": \"Wispr Flow\",\n    \"source_table\": \"History\",\n    \"source_primary_key\": \"transcriptEntityId\",\n    \"source_database_path\": \"~/Library/Application Support/Wispr Flow/flow.sqlite\"\n  },\n  \"timestamps\": {\n    \"timestamp_utc\": \"2026-05-02T19:22:06.993Z\",\n    \"timestamp_local\": \"2026-05-02T14:22:06.993-05:00\",\n    \"timezone_offset_minutes\": -300,\n    \"exported_at_utc\": \"2026-05-09T17:30:00.000Z\"\n  },\n  \"status\": {\n    \"wispr_status\": \"formatted\",\n    \"edited_text_status\": \"NOT_EXTRACTED\",\n    \"needs_uploading\": false,\n    \"share_type\": \"no\",\n    \"is_archived\": false\n  },\n  \"text\": {\n    \"asr\": \"Raw ASR transcript text.\",\n    \"formatted\": \"Formatted transcript text.\",\n    \"edited\": null,\n    \"pasted\": \"Text pasted into the target app.\",\n    \"default_asr\": null,\n    \"fallback_asr\": null,\n    \"default_formatted\": null,\n    \"fallback_formatted\": null\n  },\n  \"text_stats\": {\n    \"num_words\": 42,\n    \"duration_seconds\": 12.34,\n    \"speech_duration_seconds\": 12.2\n  },\n  \"media\": {\n    \"audio\": {\n      \"path\": \"audio.wav\",\n      \"present\": true,\n      \"format\": \"wav_pcm_s16le_16000hz_mono\",\n      \"size_bytes\": 529708,\n      \"sha256\": \"...\"\n    },\n    \"screenshot\": {\n      \"path\": \"screenshot.png\",\n      \"present\": true,\n      \"format\": \"png\",\n      \"size_bytes\": 123456,\n      \"sha256\": \"...\"\n    }\n  },\n  \"context\": {\n    \"target_app\": \"com.google.Chrome\",\n    \"target_url\": \"https://example.com/path\",\n    \"conversation_id\": \"conversation-id-if-present\",\n    \"mic_device\": \"microphone-if-present\",\n    \"language\": \"en\",\n    \"detected_language\": \"en\",\n    \"platform\": \"desktop\",\n    \"transcript_origin\": \"internal\",\n    \"app_version\": \"1.5.113\",\n    \"textbox_contents\": null,\n    \"additional_context\": {}\n  },\n  \"quality\": {\n    \"average_log_prob\": -0.1,\n    \"formatting_divergence_score\": null,\n    \"fallback_asr_divergence_score\": null,\n    \"fallback_formatting_divergence_score\": null,\n    \"used_fallback_asr\": false,\n    \"used_fallback_formatting\": false,\n    \"called_external_asr\": false,\n    \"client_network_latency\": null,\n    \"e2e_latency\": null\n  },\n  \"edits\": {\n    \"user_edit_metadata\": {},\n    \"num_words_corrected\": null,\n    \"num_dictionary_replacements\": null,\n    \"has_reverted_ai\": false\n  },\n  \"files\": {\n    \"metadata\": \"metadata.json\",\n    \"raw_transcript\": \"raw_transcript.txt\",\n    \"formatted_transcript\": \"formatted_transcript.txt\",\n    \"audio\": \"audio.wav\",\n    \"screenshot\": \"screenshot.png\"\n  },\n  \"integrity\": {\n    \"source_row_sha256\": \"...\",\n    \"record_content_sha256\": \"...\",\n    \"exporter_version\": \"0.1.0\"\n  }\n}"
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-file-tree-layout-12": {
+      "id": "b-20-wisprsync-output-shape-file-tree-layout-12",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "File Tree Layout"
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-the-default-export-root-13": {
+      "id": "b-20-wisprsync-output-shape-the-default-export-root-13",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The default export root is "
+        },
+        {
+          "insert": "data/",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": "."
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-text-14": {
+      "id": "b-20-wisprsync-output-shape-text-14",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": "data/\n├── manifest.json\n├── indexes/\n│   ├── history.jsonl\n│   ├── dictionary.jsonl\n│   └── runs.jsonl\n├── records/\n│   └── YYYY/\n│       └── MM/\n│           └── DD/\n│               └── {timestamp_compact_utc}_{transcriptEntityId}/\n│                   ├── metadata.json\n│                   ├── raw_transcript.txt\n│                   ├── formatted_transcript.txt\n│                   ├── audio.wav\n│                   └── screenshot.png\n└── runs/\n    └── YYYY/\n        └── MM/\n            └── DD/\n                └── {run_id}.json"
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-example-record-path-15": {
+      "id": "b-20-wisprsync-output-shape-example-record-path-15",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Example record path:"
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-text-16": {
+      "id": "b-20-wisprsync-output-shape-text-16",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": "records/2026/05/02/20260502T192206.993Z_73fda602-7e80-4345-90c3-9a5af36beb0e/"
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-the-date-folders-come-fr-17": {
+      "id": "b-20-wisprsync-output-shape-the-date-folders-come-fr-17",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The date folders come from "
+        },
+        {
+          "insert": "History.timestamp",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " normalized to UTC. The record ID comes from "
+        },
+        {
+          "insert": "History.transcriptEntityId",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " and defines identity. If a timestamp is missing or invalid, the record is placed under:"
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-text-18": {
+      "id": "b-20-wisprsync-output-shape-text-18",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": "records/unknown/unknown/unknown/unknown-time_{transcriptEntityId}/"
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-indexes-19": {
+      "id": "b-20-wisprsync-output-shape-indexes-19",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Indexes"
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-indexes-history-jsonl-20": {
+      "id": "b-20-wisprsync-output-shape-indexes-history-jsonl-20",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "indexes/history.jsonl",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " has one compact JSON object per searchable transcript record. It includes current "
+        },
+        {
+          "insert": "History",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " rows and previously exported records that are now missing from the source database. Current rows use "
+        },
+        {
+          "insert": "source_status: \"current\"",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": "; retained rows use "
+        },
+        {
+          "insert": "source_status: \"missing_from_source\"",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " and keep the last exported text, metadata path, media paths, and hashes."
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-indexes-dictionary-json-21": {
+      "id": "b-20-wisprsync-output-shape-indexes-dictionary-json-21",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "indexes/dictionary.jsonl",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " is a full export of the current "
+        },
+        {
+          "insert": "Dictionary",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " table. It represents the latest dictionary state for the run rather than an append-only dictionary history."
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-indexes-runs-jsonl-app-22": {
+      "id": "b-20-wisprsync-output-shape-indexes-runs-jsonl-app-22",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "indexes/runs.jsonl",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " appends one compact summary object for each export run."
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-manifest-and-run-reports-23": {
+      "id": "b-20-wisprsync-output-shape-manifest-and-run-reports-23",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Manifest And Run Reports"
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-manifest-json-describe-24": {
+      "id": "b-20-wisprsync-output-shape-manifest-json-describe-24",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "manifest.json",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " describes the whole data zone and latest export state: dataset timestamps, source database, counts, date range, index paths, latest run, and top-level integrity hashes."
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-each-run-writes-a-full-r-25": {
+      "id": "b-20-wisprsync-output-shape-each-run-writes-a-full-r-25",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Each run writes a full report under:"
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-text-26": {
+      "id": "b-20-wisprsync-output-shape-text-26",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": "runs/YYYY/MM/DD/{run_id}.json"
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-the-run-report-records-t-27": {
+      "id": "b-20-wisprsync-output-shape-the-run-report-records-t-27",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The run report records the source snapshot, counts for created/updated/unchanged/skipped/missing records, collision and error counts, and per-record changes."
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-placement-rules-28": {
+      "id": "b-20-wisprsync-output-shape-placement-rules-28",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Placement Rules"
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-metadata-json-is-requi-29": {
+      "id": "b-20-wisprsync-output-shape-metadata-json-is-requi-29",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "metadata.json",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " is required for every exported record."
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-transcript-option-files-30": {
+      "id": "b-20-wisprsync-output-shape-transcript-option-files-30",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "Transcript option files are created only when the corresponding source field is non-empty."
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-media-files-are-created-31": {
+      "id": "b-20-wisprsync-output-shape-media-files-are-created-31",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "Media files are created only when the source row has the blob and the export configuration includes that media type."
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-blob-bytes-are-never-emb-32": {
+      "id": "b-20-wisprsync-output-shape-blob-bytes-are-never-emb-32",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "Blob bytes are never embedded in JSON."
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-paths-inside-indexes-are-33": {
+      "id": "b-20-wisprsync-output-shape-paths-inside-indexes-are-33",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "Paths inside indexes are relative to the output root."
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-source-rows-that-disappe-34": {
+      "id": "b-20-wisprsync-output-shape-source-rows-that-disappe-34",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "Source rows that disappear are reported as missing from source, not deleted from the export by default."
+        }
+      ],
+      "children": []
+    },
+    "b-20-wisprsync-output-shape-raw-wispr-flow-app-folde-35": {
+      "id": "b-20-wisprsync-output-shape-raw-wispr-flow-app-folde-35",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "Raw Wispr Flow app folders, cookies, session files, caches, telemetry queues, and Electron state are outside the canonical export."
+        }
+      ],
+      "children": []
+    }
+  }
+}

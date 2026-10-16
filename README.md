@@ -46,7 +46,7 @@ In Wispr Flow, go to `Settings > Data and Privacy > Local data storage` and choo
 
 If local data storage is disabled, WisprSync will not have local transcript data to export.
 
-![Wispr Flow Data and Privacy settings showing Local data storage set to Store data locally](docs/assets/wispr-flow-local-data-storage.png)
+![Wispr Flow Data and Privacy settings showing Local data storage set to Store data locally](docs/05-overview/assets/images/wispr-flow-local-data-storage.png)
 
 ## Quick Start
 

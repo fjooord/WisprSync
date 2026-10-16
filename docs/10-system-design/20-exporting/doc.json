@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "id": "10-system-design-20-exporting-00-overview",
+  "title": "Exporting",
+  "root": "b-00-overview-root-11",
+  "blocks": {
+    "b-00-overview-root-11": {
+      "id": "b-00-overview-root-11",
+      "type": "paragraph",
+      "props": {
+        "concepts": [
+          "exporting",
+          "folder-export",
+          "targets"
+        ],
+        "covers": "The exporting design section for folder export and future extension ideas.",
+        "type": "overview"
+      },
+      "children": [
+        "b-00-overview-exporting-writes-the-can-2",
+        "b-00-overview-divider-3",
+        "b-00-overview-file-tree-4",
+        "b-00-overview-text-5",
+        "b-00-overview-export-modes-6",
+        "b-00-overview-folder-export-10-folde-7",
+        "b-00-overview-the-base-mode-writes-to-8",
+        "b-00-overview-export-targets-30-expo-9",
+        "b-00-overview-future-targets-such-as-10"
+      ]
+    },
+    "b-00-overview-exporting-writes-the-can-2": {
+      "id": "b-00-overview-exporting-writes-the-can-2",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Exporting writes the canonical WisprSync data tree to a folder the user specifies. If the user wants cloud sync, they can choose a folder already managed by Dropbox, iCloud Drive, Google Drive, OneDrive, or another sync tool."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-divider-3": {
+      "id": "b-00-overview-divider-3",
+      "type": "divider",
+      "props": {},
+      "children": []
+    },
+    "b-00-overview-file-tree-4": {
+      "id": "b-00-overview-file-tree-4",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "File Tree"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-text-5": {
+      "id": "b-00-overview-text-5",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": "20-exporting/                       (this page)\n├── 10-folder-export/               Write the export to a specified local folder\n└── 30-export-targets/              Extension model for future remote targets"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-export-modes-6": {
+      "id": "b-00-overview-export-modes-6",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Export Modes"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-folder-export-10-folde-7": {
+      "id": "b-00-overview-folder-export-10-folde-7",
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "text": [
+        {
+          "insert": "Folder Export",
+          "attributes": {
+            "reference": {
+              "kind": "doc",
+              "path": "10-system-design/20-exporting/10-folder-export",
+              "label": "Folder Export"
+            }
+          }
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-the-base-mode-writes-to-8": {
+      "id": "b-00-overview-the-base-mode-writes-to-8",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The base mode writes to a user-specified folder. This is the default and should remain the lowest-friction path. For easy cloud backup, the recommended output folder can live inside a normal cloud-synced directory such as Dropbox, iCloud Drive, Google Drive, or OneDrive."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-export-targets-30-expo-9": {
+      "id": "b-00-overview-export-targets-30-expo-9",
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "text": [
+        {
+          "insert": "Export Targets",
+          "attributes": {
+            "reference": {
+              "kind": "doc",
+              "path": "10-system-design/20-exporting/30-export-targets",
+              "label": "Export Targets"
+            }
+          }
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-future-targets-such-as-10": {
+      "id": "b-00-overview-future-targets-such-as-10",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Future targets, such as GitHub, S3, webhooks, or another remote store, are not implemented today. If they are added later, they should plug in after folder export without changing the source reading or canonical data shape."
+        }
+      ],
+      "children": []
+    }
+  }
+}

@@ -1,0 +1,190 @@
+{
+  "schemaVersion": 1,
+  "id": "00-overview",
+  "title": "WisprSync Documentation",
+  "root": "b-00-overview-root-13",
+  "blocks": {
+    "b-00-overview-root-13": {
+      "id": "b-00-overview-root-13",
+      "type": "paragraph",
+      "props": {
+        "concepts": [
+          "documentation",
+          "foundation",
+          "design",
+          "implementation"
+        ],
+        "covers": "The entry point for WisprSync documentation, organized into foundation, design, and implementation layers.",
+        "type": "overview"
+      },
+      "children": [
+        "b-00-overview-wisprsync-documentation-2",
+        "b-00-overview-divider-3",
+        "b-00-overview-file-tree-4",
+        "b-00-overview-text-5",
+        "b-00-overview-layers-6",
+        "b-00-overview-foundation-00-foundati-7",
+        "b-00-overview-the-foundation-layer-exp-8",
+        "b-00-overview-system-design-10-syste-9",
+        "b-00-overview-the-design-layer-describ-10",
+        "b-00-overview-implementation-20-impl-11",
+        "b-00-overview-the-implementation-layer-12"
+      ]
+    },
+    "b-00-overview-wisprsync-documentation-2": {
+      "id": "b-00-overview-wisprsync-documentation-2",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "WisprSync documentation is organized into foundation, system design, and implementation layers. The foundation layer explains why the project exists, the design layer explains the data and export model, and the implementation layer explains how the current repo code produces and validates that structure."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-divider-3": {
+      "id": "b-00-overview-divider-3",
+      "type": "divider",
+      "props": {},
+      "children": []
+    },
+    "b-00-overview-file-tree-4": {
+      "id": "b-00-overview-file-tree-4",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "File Tree"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-text-5": {
+      "id": "b-00-overview-text-5",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": "docs/\n├── 00-foundation/              Project motivation and ownership framing\n├── 05-overview/                (this page)\n├── 10-system-design/           Design-level data contracts and sync behavior\n└── 20-implementation/          Code-specific exporter, validation, and setup docs"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-layers-6": {
+      "id": "b-00-overview-layers-6",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Layers"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-foundation-00-foundati-7": {
+      "id": "b-00-overview-foundation-00-foundati-7",
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "text": [
+        {
+          "insert": "Foundation",
+          "attributes": {
+            "reference": {
+              "kind": "doc",
+              "path": "00-foundation"
+            }
+          }
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-the-foundation-layer-exp-8": {
+      "id": "b-00-overview-the-foundation-layer-exp-8",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The foundation layer explains the project origin and data ownership motivation. Start here to understand the backstory before reading the data model."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-system-design-10-syste-9": {
+      "id": "b-00-overview-system-design-10-syste-9",
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "text": [
+        {
+          "insert": "System Design",
+          "attributes": {
+            "reference": {
+              "kind": "doc",
+              "path": "10-system-design"
+            }
+          }
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-the-design-layer-describ-10": {
+      "id": "b-00-overview-the-design-layer-describ-10",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The design layer describes the data model independent of Python modules. Start here to understand what Wispr Flow provides, what WisprSync treats as the canonical record, and how records are laid out under "
+        },
+        {
+          "insert": "data/",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": "."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-implementation-20-impl-11": {
+      "id": "b-00-overview-implementation-20-impl-11",
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "text": [
+        {
+          "insert": "Implementation",
+          "attributes": {
+            "reference": {
+              "kind": "doc",
+              "path": "20-implementation"
+            }
+          }
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-the-implementation-layer-12": {
+      "id": "b-00-overview-the-implementation-layer-12",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The implementation layer maps the design onto the current repository. Read it when changing setup, source discovery, export, record writing, index generation, or validation behavior."
+        }
+      ],
+      "children": []
+    }
+  }
+}

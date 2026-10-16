@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "id": "10-system-design-10-data-structure-00-overview",
+  "title": "Data Structure",
+  "root": "b-00-overview-root-11",
+  "blocks": {
+    "b-00-overview-root-11": {
+      "id": "b-00-overview-root-11",
+      "type": "paragraph",
+      "props": {
+        "concepts": [
+          "data-structure",
+          "source-shape",
+          "output-shape"
+        ],
+        "covers": "The data structure section for Wispr Flow source data and WisprSync output data.",
+        "type": "overview"
+      },
+      "children": [
+        "b-00-overview-wisprsync-s-data-model-i-2",
+        "b-00-overview-divider-3",
+        "b-00-overview-file-tree-4",
+        "b-00-overview-text-5",
+        "b-00-overview-child-nodes-6",
+        "b-00-overview-wispr-flow-source-shape-7",
+        "b-00-overview-documents-what-wispr-flo-8",
+        "b-00-overview-wisprsync-output-shape-9",
+        "b-00-overview-documents-what-wisprsync-10"
+      ]
+    },
+    "b-00-overview-wisprsync-s-data-model-i-2": {
+      "id": "b-00-overview-wisprsync-s-data-model-i-2",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "WisprSync's data model is easiest to understand in two stages: the shape Wispr Flow stores locally, and the shape WisprSync exports for ownership, search, validation, and analysis. This section keeps those shapes separate so source facts do not blur into output contracts."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-divider-3": {
+      "id": "b-00-overview-divider-3",
+      "type": "divider",
+      "props": {},
+      "children": []
+    },
+    "b-00-overview-file-tree-4": {
+      "id": "b-00-overview-file-tree-4",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "File Tree"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-text-5": {
+      "id": "b-00-overview-text-5",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": "10-data-structure/                    (this page)\n├── 10-wispr-flow-source-shape/       Source SQLite tables, History fields, media, and Dictionary data\n└── 20-wisprsync-output-shape/        Canonical record shape, output tree, indexes, manifest, and placement rules"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-child-nodes-6": {
+      "id": "b-00-overview-child-nodes-6",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Child Nodes"
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-wispr-flow-source-shape-7": {
+      "id": "b-00-overview-wispr-flow-source-shape-7",
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "text": [
+        {
+          "insert": "Wispr Flow Source Shape",
+          "attributes": {
+            "reference": {
+              "kind": "doc",
+              "path": "10-system-design/10-data-structure/10-wispr-flow-source-shape",
+              "label": "Wispr Flow Source Shape"
+            }
+          }
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-documents-what-wispr-flo-8": {
+      "id": "b-00-overview-documents-what-wispr-flo-8",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Documents what Wispr Flow stores locally: the primary SQLite database, "
+        },
+        {
+          "insert": "History",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " table, field groups, source media, and dictionary data."
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-wisprsync-output-shape-9": {
+      "id": "b-00-overview-wisprsync-output-shape-9",
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "text": [
+        {
+          "insert": "WisprSync Output Shape",
+          "attributes": {
+            "reference": {
+              "kind": "doc",
+              "path": "10-system-design/10-data-structure/20-wisprsync-output-shape",
+              "label": "WisprSync Output Shape"
+            }
+          }
+        }
+      ],
+      "children": []
+    },
+    "b-00-overview-documents-what-wisprsync-10": {
+      "id": "b-00-overview-documents-what-wisprsync-10",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Documents what WisprSync exports: canonical records, "
+        },
+        {
+          "insert": "metadata.json",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": ", transcript/media files, "
+        },
+        {
+          "insert": "data/",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " layout, JSONL indexes, manifest, run reports, and placement rules."
+        }
+      ],
+      "children": []
+    }
+  }
+}

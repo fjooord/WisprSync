@@ -1,0 +1,1080 @@
+{
+  "schemaVersion": 1,
+  "id": "20-implementation-99-appendix-10-setup-workflow",
+  "title": "Setup Workflow",
+  "root": "b-10-setup-workflow-root-65",
+  "blocks": {
+    "b-10-setup-workflow-root-65": {
+      "id": "b-10-setup-workflow-root-65",
+      "type": "paragraph",
+      "props": {
+        "concepts": [
+          "setup",
+          "discovery",
+          "config",
+          "commands"
+        ],
+        "covers": "How WisprSync local setup discovers the source database, writes config, and exposes repo-local commands."
+      },
+      "children": [
+        "b-10-setup-workflow-wisprsync-is-repo-local-2",
+        "b-10-setup-workflow-divider-3",
+        "b-10-setup-workflow-local-config-4",
+        "b-10-setup-workflow-machine-local-config-is-5",
+        "b-10-setup-workflow-text-6",
+        "b-10-setup-workflow-example-7",
+        "b-10-setup-workflow-json-8",
+        "b-10-setup-workflow-wisprsync-config-json-9",
+        "b-10-setup-workflow-source-discovery-10",
+        "b-10-setup-workflow-known-macos-candidates-f-11",
+        "b-10-setup-workflow-text-12",
+        "b-10-setup-workflow-the-reference-lives-at-13",
+        "b-10-setup-workflow-text-14",
+        "b-10-setup-workflow-update-that-reference-if-15",
+        "b-10-setup-workflow-discovery-rules-16",
+        "b-10-setup-workflow-expand-to-the-curren-17",
+        "b-10-setup-workflow-keep-candidates-that-exi-18",
+        "b-10-setup-workflow-verify-each-candidate-ha-19",
+        "b-10-setup-workflow-count-history-rows-for-20",
+        "b-10-setup-workflow-prefer-the-valid-candida-21",
+        "b-10-setup-workflow-show-the-chosen-path-to-22",
+        "b-10-setup-workflow-allow-an-override-if-the-23",
+        "b-10-setup-workflow-useful-read-only-checks-24",
+        "b-10-setup-workflow-sh-25",
+        "b-10-setup-workflow-if-the-database-is-copie-26",
+        "b-10-setup-workflow-sh-27",
+        "b-10-setup-workflow-for-the-live-app-databas-28",
+        "b-10-setup-workflow-repo-commands-29",
+        "b-10-setup-workflow-expected-repo-local-comm-30",
+        "b-10-setup-workflow-sh-31",
+        "b-10-setup-workflow-bin-setup-32",
+        "b-10-setup-workflow-prints-the-repository-ro-33",
+        "b-10-setup-workflow-discovers-candidate-sour-34",
+        "b-10-setup-workflow-asks-the-user-which-sour-35",
+        "b-10-setup-workflow-asks-where-exported-file-36",
+        "b-10-setup-workflow-suggests-wispr-sync-37",
+        "b-10-setup-workflow-resolves-and-displays-th-38",
+        "b-10-setup-workflow-asks-before-using-a-dest-39",
+        "b-10-setup-workflow-warns-before-using-a-rep-40",
+        "b-10-setup-workflow-keeps-wisprsync-and-41",
+        "b-10-setup-workflow-asks-whether-to-include-42",
+        "b-10-setup-workflow-defaults-screenshots-to-43",
+        "b-10-setup-workflow-shows-a-final-review-of-44",
+        "b-10-setup-workflow-writes-wisprsync-confi-45",
+        "b-10-setup-workflow-automation-is-stricter-t-46",
+        "b-10-setup-workflow-bin-sync-47",
+        "b-10-setup-workflow-runs-export-48",
+        "b-10-setup-workflow-runs-validation-49",
+        "b-10-setup-workflow-bin-schedule-install-50",
+        "b-10-setup-workflow-writes-a-macos-launchage-51",
+        "b-10-setup-workflow-creates-a-private-no-pip-52",
+        "b-10-setup-workflow-creates-a-dedicated-wi-53",
+        "b-10-setup-workflow-runs-that-dedicated-laun-54",
+        "b-10-setup-workflow-defaults-to-daily-at-00-55",
+        "b-10-setup-workflow-internally-these-call-t-56",
+        "b-10-setup-workflow-sh-57",
+        "b-10-setup-workflow-implementation-code-stay-58",
+        "b-10-setup-workflow-scheduling-59",
+        "b-10-setup-workflow-scheduling-should-call-r-60",
+        "b-10-setup-workflow-sh-61",
+        "b-10-setup-workflow-on-macos-launchd-is-t-62",
+        "b-10-setup-workflow-the-dedicated-runner-app-63",
+        "b-10-setup-workflow-see-macos-scheduler-per-64"
+      ]
+    },
+    "b-10-setup-workflow-wisprsync-is-repo-local-2": {
+      "id": "b-10-setup-workflow-wisprsync-is-repo-local-2",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "WisprSync is repo-local first. A user can fork or clone the repo, open it with an agent, and run setup from the repository root without installing a global package."
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-divider-3": {
+      "id": "b-10-setup-workflow-divider-3",
+      "type": "divider",
+      "props": {},
+      "children": []
+    },
+    "b-10-setup-workflow-local-config-4": {
+      "id": "b-10-setup-workflow-local-config-4",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Local Config"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-machine-local-config-is-5": {
+      "id": "b-10-setup-workflow-machine-local-config-is-5",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Machine-local config is written to:"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-text-6": {
+      "id": "b-10-setup-workflow-text-6",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": ".wisprsync/config.json"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-example-7": {
+      "id": "b-10-setup-workflow-example-7",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Example:"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-json-8": {
+      "id": "b-10-setup-workflow-json-8",
+      "type": "code",
+      "props": {
+        "language": "json"
+      },
+      "text": [
+        {
+          "insert": "{\n  \"schema_version\": 1,\n  \"source_database\": \"/Users/example/Library/Application Support/Wispr Flow/flow.sqlite\",\n  \"output_directory\": \"/Users/example/Documents/wispr_sync\",\n  \"include_screenshots\": true,\n  \"schedule\": {\n    \"enabled\": false,\n    \"provider\": \"launchd\",\n    \"local_time\": \"00:00\"\n  }\n}"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-wisprsync-config-json-9": {
+      "id": "b-10-setup-workflow-wisprsync-config-json-9",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": ".wisprsync/config.json",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " stays ignored by Git."
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-source-discovery-10": {
+      "id": "b-10-setup-workflow-source-discovery-10",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Source Discovery"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-known-macos-candidates-f-11": {
+      "id": "b-10-setup-workflow-known-macos-candidates-f-11",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Known macOS candidates from the dated Wispr Flow local storage reference:"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-text-12": {
+      "id": "b-10-setup-workflow-text-12",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": "~/Library/Application Support/Wispr Flow/flow.sqlite\n~/Library/Application Support/Flow/flow.sqlite"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-the-reference-lives-at-13": {
+      "id": "b-10-setup-workflow-the-reference-lives-at-13",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The reference lives at:"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-text-14": {
+      "id": "b-10-setup-workflow-text-14",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": ".codex/skills/wisprsync/reference/wispr-flow-local-storage.md"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-update-that-reference-if-15": {
+      "id": "b-10-setup-workflow-update-that-reference-if-15",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Update that reference if Wispr Flow changes its app storage location or SQLite schema."
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-discovery-rules-16": {
+      "id": "b-10-setup-workflow-discovery-rules-16",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Discovery rules:"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-expand-to-the-curren-17": {
+      "id": "b-10-setup-workflow-expand-to-the-curren-17",
+      "type": "list-item",
+      "props": {
+        "ordered": true
+      },
+      "text": [
+        {
+          "insert": "Expand "
+        },
+        {
+          "insert": "~",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " to the current user's home directory."
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-keep-candidates-that-exi-18": {
+      "id": "b-10-setup-workflow-keep-candidates-that-exi-18",
+      "type": "list-item",
+      "props": {
+        "ordered": true
+      },
+      "text": [
+        {
+          "insert": "Keep candidates that exist and are readable SQLite databases."
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-verify-each-candidate-ha-19": {
+      "id": "b-10-setup-workflow-verify-each-candidate-ha-19",
+      "type": "list-item",
+      "props": {
+        "ordered": true
+      },
+      "text": [
+        {
+          "insert": "Verify each candidate has a "
+        },
+        {
+          "insert": "History",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " table."
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-count-history-rows-for-20": {
+      "id": "b-10-setup-workflow-count-history-rows-for-20",
+      "type": "list-item",
+      "props": {
+        "ordered": true
+      },
+      "text": [
+        {
+          "insert": "Count "
+        },
+        {
+          "insert": "History",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " rows for valid candidates."
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-prefer-the-valid-candida-21": {
+      "id": "b-10-setup-workflow-prefer-the-valid-candida-21",
+      "type": "list-item",
+      "props": {
+        "ordered": true
+      },
+      "text": [
+        {
+          "insert": "Prefer the valid candidate with the most "
+        },
+        {
+          "insert": "History",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " rows."
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-show-the-chosen-path-to-22": {
+      "id": "b-10-setup-workflow-show-the-chosen-path-to-22",
+      "type": "list-item",
+      "props": {
+        "ordered": true
+      },
+      "text": [
+        {
+          "insert": "Show the chosen path to the user or mention it in the setup summary."
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-allow-an-override-if-the-23": {
+      "id": "b-10-setup-workflow-allow-an-override-if-the-23",
+      "type": "list-item",
+      "props": {
+        "ordered": true
+      },
+      "text": [
+        {
+          "insert": "Allow an override if the user gives an explicit path."
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-useful-read-only-checks-24": {
+      "id": "b-10-setup-workflow-useful-read-only-checks-24",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Useful read-only checks:"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-sh-25": {
+      "id": "b-10-setup-workflow-sh-25",
+      "type": "code",
+      "props": {
+        "language": "sh"
+      },
+      "text": [
+        {
+          "insert": "sqlite3 -readonly \"$DB\" '.tables'\nsqlite3 -readonly \"$DB\" 'select count(*) from History;'"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-if-the-database-is-copie-26": {
+      "id": "b-10-setup-workflow-if-the-database-is-copie-26",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "If the database is copied and reports locked, immutable URI mode can inspect it:"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-sh-27": {
+      "id": "b-10-setup-workflow-sh-27",
+      "type": "code",
+      "props": {
+        "language": "sh"
+      },
+      "text": [
+        {
+          "insert": "sqlite3 \"file:$DB?mode=ro&immutable=1\" 'select count(*) from History;'"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-for-the-live-app-databas-28": {
+      "id": "b-10-setup-workflow-for-the-live-app-databas-28",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "For the live app database, SQLite backup APIs are preferred over reading from an inconsistent direct copy."
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-repo-commands-29": {
+      "id": "b-10-setup-workflow-repo-commands-29",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Repo Commands"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-expected-repo-local-comm-30": {
+      "id": "b-10-setup-workflow-expected-repo-local-comm-30",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Expected repo-local commands:"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-sh-31": {
+      "id": "b-10-setup-workflow-sh-31",
+      "type": "code",
+      "props": {
+        "language": "sh"
+      },
+      "text": [
+        {
+          "insert": "./bin/setup\n./bin/sync"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-bin-setup-32": {
+      "id": "b-10-setup-workflow-bin-setup-32",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "./bin/setup",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": ":"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-prints-the-repository-ro-33": {
+      "id": "b-10-setup-workflow-prints-the-repository-ro-33",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "prints the repository root and target "
+        },
+        {
+          "insert": ".wisprsync/config.json",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " path,"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-discovers-candidate-sour-34": {
+      "id": "b-10-setup-workflow-discovers-candidate-sour-34",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "discovers candidate source databases and shows their paths and "
+        },
+        {
+          "insert": "History",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " row counts,"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-asks-the-user-which-sour-35": {
+      "id": "b-10-setup-workflow-asks-the-user-which-sour-35",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "asks the user which source database to use, while accepting a custom path,"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-asks-where-exported-file-36": {
+      "id": "b-10-setup-workflow-asks-where-exported-file-36",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "asks where exported files should go before any sync runs,"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-suggests-wispr-sync-37": {
+      "id": "b-10-setup-workflow-suggests-wispr-sync-37",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "suggests "
+        },
+        {
+          "insert": "../wispr_sync",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " as the default output location,"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-resolves-and-displays-th-38": {
+      "id": "b-10-setup-workflow-resolves-and-displays-th-38",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "resolves and displays the exact output path,"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-asks-before-using-a-dest-39": {
+      "id": "b-10-setup-workflow-asks-before-using-a-dest-39",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "asks before using a destination that does not exist,"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-warns-before-using-a-rep-40": {
+      "id": "b-10-setup-workflow-warns-before-using-a-rep-40",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "warns before using a repo-local output path and requires explicit confirmation,"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-keeps-wisprsync-and-41": {
+      "id": "b-10-setup-workflow-keeps-wisprsync-and-41",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "keeps "
+        },
+        {
+          "insert": ".wisprsync/",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " and "
+        },
+        {
+          "insert": ".wisprsync-cache/",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " blocked,"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-asks-whether-to-include-42": {
+      "id": "b-10-setup-workflow-asks-whether-to-include-42",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "asks whether to include screenshots and whether to install a daily schedule,"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-defaults-screenshots-to-43": {
+      "id": "b-10-setup-workflow-defaults-screenshots-to-43",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "defaults screenshots to enabled,"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-shows-a-final-review-of-44": {
+      "id": "b-10-setup-workflow-shows-a-final-review-of-44",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "shows a final review of source, output, screenshots, schedule, and config path,"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-writes-wisprsync-confi-45": {
+      "id": "b-10-setup-workflow-writes-wisprsync-confi-45",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "writes "
+        },
+        {
+          "insert": ".wisprsync/config.json",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " only after "
+        },
+        {
+          "insert": "Write this config? [Y/n]",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " is accepted."
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-automation-is-stricter-t-46": {
+      "id": "b-10-setup-workflow-automation-is-stricter-t-46",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Automation is stricter than interactive setup. Noninteractive setup, including "
+        },
+        {
+          "insert": "--yes",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": ", requires "
+        },
+        {
+          "insert": "--output",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": ". It never silently infers an output directory. Scripted developer workflows can still pass "
+        },
+        {
+          "insert": "--allow-unsafe-output",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": ", but an output path that already exists as a file remains non-overridable."
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-bin-sync-47": {
+      "id": "b-10-setup-workflow-bin-sync-47",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "./bin/sync",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": ":"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-runs-export-48": {
+      "id": "b-10-setup-workflow-runs-export-48",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "runs export,"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-runs-validation-49": {
+      "id": "b-10-setup-workflow-runs-validation-49",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "runs validation."
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-bin-schedule-install-50": {
+      "id": "b-10-setup-workflow-bin-schedule-install-50",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "./bin/schedule install",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": ":"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-writes-a-macos-launchage-51": {
+      "id": "b-10-setup-workflow-writes-a-macos-launchage-51",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "writes a macOS LaunchAgent,"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-creates-a-private-no-pip-52": {
+      "id": "b-10-setup-workflow-creates-a-private-no-pip-52",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "creates a private no-pip "
+        },
+        {
+          "insert": ".wisprsync/runner-venv",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " runtime,"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-creates-a-dedicated-wi-53": {
+      "id": "b-10-setup-workflow-creates-a-dedicated-wi-53",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "creates a dedicated "
+        },
+        {
+          "insert": ".wisprsync/WisprSync Runner.app",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " launcher,"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-runs-that-dedicated-laun-54": {
+      "id": "b-10-setup-workflow-runs-that-dedicated-laun-54",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "runs that dedicated launcher from the LaunchAgent,"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-defaults-to-daily-at-00-55": {
+      "id": "b-10-setup-workflow-defaults-to-daily-at-00-55",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "defaults to daily at 00:00 local time."
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-internally-these-call-t-56": {
+      "id": "b-10-setup-workflow-internally-these-call-t-56",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Internally, these call the package module:"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-sh-57": {
+      "id": "b-10-setup-workflow-sh-57",
+      "type": "code",
+      "props": {
+        "language": "sh"
+      },
+      "text": [
+        {
+          "insert": "python3 -m wisprsync setup\npython3 -m wisprsync sync\npython3 -m wisprsync export\npython3 -m wisprsync validate\npython3 -m wisprsync schedule install\npython3 -m wisprsync doctor"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-implementation-code-stay-58": {
+      "id": "b-10-setup-workflow-implementation-code-stay-58",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Implementation code stays in package modules under "
+        },
+        {
+          "insert": "wisprsync/",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": "."
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-scheduling-59": {
+      "id": "b-10-setup-workflow-scheduling-59",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Scheduling"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-scheduling-should-call-r-60": {
+      "id": "b-10-setup-workflow-scheduling-should-call-r-60",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Scheduling should call repo-local commands from this repository, for example:"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-sh-61": {
+      "id": "b-10-setup-workflow-sh-61",
+      "type": "code",
+      "props": {
+        "language": "sh"
+      },
+      "text": [
+        {
+          "insert": "cd /path/to/WisprSync && ./bin/sync"
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-on-macos-launchd-is-t-62": {
+      "id": "b-10-setup-workflow-on-macos-launchd-is-t-62",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "On macOS, "
+        },
+        {
+          "insert": "launchd",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " is the preferred scheduler for user-session reliability. The scheduler installs a user LaunchAgent named "
+        },
+        {
+          "insert": "com.codecaine.wispr_sync_runner",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " that runs "
+        },
+        {
+          "insert": ".wisprsync/WisprSync Runner.app/Contents/MacOS/wisprsync-runner",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " at midnight."
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-the-dedicated-runner-app-63": {
+      "id": "b-10-setup-workflow-the-dedicated-runner-app-63",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The dedicated runner app exists so macOS privacy access can be granted to WisprSync's local scheduled runner instead of granting Full Disk Access to a shared Python interpreter. The runner app executes the private "
+        },
+        {
+          "insert": ".wisprsync/runner-venv/bin/python",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " copy created during schedule installation."
+        }
+      ],
+      "children": []
+    },
+    "b-10-setup-workflow-see-macos-scheduler-per-64": {
+      "id": "b-10-setup-workflow-see-macos-scheduler-per-64",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "See "
+        },
+        {
+          "insert": "macOS Scheduler Permissions",
+          "attributes": {
+            "reference": {
+              "kind": "doc",
+              "path": "20-implementation/99-appendix/20-macos-scheduler-permissions",
+              "label": "macOS Scheduler Permissions"
+            }
+          }
+        },
+        {
+          "insert": " for the implementation details, runtime paths, verification commands, and failure-mode notes."
+        }
+      ],
+      "children": []
+    }
+  }
+}

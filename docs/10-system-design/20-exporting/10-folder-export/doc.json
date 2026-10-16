@@ -1,0 +1,958 @@
+{
+  "schemaVersion": 1,
+  "id": "10-system-design-20-exporting-10-folder-export",
+  "title": "Folder Export",
+  "root": "b-10-folder-export-root-52",
+  "blocks": {
+    "b-10-folder-export-root-52": {
+      "id": "b-10-folder-export-root-52",
+      "type": "paragraph",
+      "props": {
+        "concepts": [
+          "folder-export",
+          "output-directory",
+          "sync",
+          "hashes"
+        ],
+        "covers": "The default WisprSync export mode that writes canonical data to a user-specified folder.",
+        "depends-on": [
+          "10-system-design/10-data-structure/20-wisprsync-output-shape.md"
+        ]
+      },
+      "children": [
+        "b-10-folder-export-folder-export-is-the-bas-2",
+        "b-10-folder-export-divider-3",
+        "b-10-folder-export-recommended-use-4",
+        "b-10-folder-export-for-most-users-the-easi-5",
+        "b-10-folder-export-text-6",
+        "b-10-folder-export-wisprsync-does-not-need-7",
+        "b-10-folder-export-basic-flow-8",
+        "b-10-folder-export-for-each-run-9",
+        "b-10-folder-export-resolve-the-source-wispr-10",
+        "b-10-folder-export-resolve-the-output-direc-11",
+        "b-10-folder-export-read-rows-from-history-12",
+        "b-10-folder-export-for-each-row-build-the-13",
+        "b-10-folder-export-write-the-record-directo-14",
+        "b-10-folder-export-add-previously-exported-20",
+        "b-10-folder-export-write-indexes-history-j-21",
+        "b-10-folder-export-regenerate-indexes-dict-22",
+        "b-10-folder-export-write-manifest-json-23",
+        "b-10-folder-export-prune-older-repo-local-s-24",
+        "b-10-folder-export-write-a-run-report-under-25",
+        "b-10-folder-export-record-identity-26",
+        "b-10-folder-export-the-record-id-is-27",
+        "b-10-folder-export-text-28",
+        "b-10-folder-export-the-timestamp-only-organ-29",
+        "b-10-folder-export-text-30",
+        "b-10-folder-export-if-the-same-transcripte-31",
+        "b-10-folder-export-repeat-runs-32",
+        "b-10-folder-export-on-repeat-export-33",
+        "b-10-folder-export-missing-exported-record-34",
+        "b-10-folder-export-same-id-and-same-source-35",
+        "b-10-folder-export-same-id-and-changed-sour-36",
+        "b-10-folder-export-same-id-but-timestamp-pa-37",
+        "b-10-folder-export-exported-id-missing-from-38",
+        "b-10-folder-export-hashes-39",
+        "b-10-folder-export-hashes-are-only-there-to-40",
+        "b-10-folder-export-hashes-table",
+        "b-10-folder-export-exported-at-utc-is-exc-42",
+        "b-10-folder-export-safety-checks-43",
+        "b-10-folder-export-the-exporter-should-stop-44",
+        "b-10-folder-export-output-paths-that-overla-45",
+        "b-10-folder-export-duplicate-transcriptent-47",
+        "b-10-folder-export-two-source-rows-resolvin-48",
+        "b-10-folder-export-an-existing-record-path-49",
+        "b-10-folder-export-duplicate-ids-in-indexe-50",
+        "b-10-folder-export-these-are-hard-failures-51"
+      ]
+    },
+    "b-10-folder-export-folder-export-is-the-bas-2": {
+      "id": "b-10-folder-export-folder-export-is-the-bas-2",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Folder export is the base WisprSync behavior. It reads Wispr Flow data and writes the canonical export tree to the output directory the user specifies, usually a "
+        },
+        {
+          "insert": "wispr_sync",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " folder inside a cloud-synced directory."
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-divider-3": {
+      "id": "b-10-folder-export-divider-3",
+      "type": "divider",
+      "props": {},
+      "children": []
+    },
+    "b-10-folder-export-recommended-use-4": {
+      "id": "b-10-folder-export-recommended-use-4",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Recommended Use"
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-for-most-users-the-easi-5": {
+      "id": "b-10-folder-export-for-most-users-the-easi-5",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "For most users, the easiest cloud sync path is to choose an output folder that is already synced by another tool:"
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-text-6": {
+      "id": "b-10-folder-export-text-6",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": "~/Dropbox/WisprSync\n~/Library/Mobile Documents/com~apple~CloudDocs/WisprSync\n~/Google Drive/My Drive/WisprSync\n~/OneDrive/WisprSync"
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-wisprsync-does-not-need-7": {
+      "id": "b-10-folder-export-wisprsync-does-not-need-7",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "WisprSync does not need to understand those cloud providers. It just writes files to the folder, and the user's existing sync tool uploads them."
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-basic-flow-8": {
+      "id": "b-10-folder-export-basic-flow-8",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Basic Flow"
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-for-each-run-9": {
+      "id": "b-10-folder-export-for-each-run-9",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "For each run:"
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-resolve-the-source-wispr-10": {
+      "id": "b-10-folder-export-resolve-the-source-wispr-10",
+      "type": "list-item",
+      "props": {
+        "ordered": true
+      },
+      "text": [
+        {
+          "insert": "Resolve the source Wispr Flow SQLite database."
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-resolve-the-output-direc-11": {
+      "id": "b-10-folder-export-resolve-the-output-direc-11",
+      "type": "list-item",
+      "props": {
+        "ordered": true
+      },
+      "text": [
+        {
+          "insert": "Resolve the output directory."
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-read-rows-from-history-12": {
+      "id": "b-10-folder-export-read-rows-from-history-12",
+      "type": "list-item",
+      "props": {
+        "ordered": true
+      },
+      "text": [
+        {
+          "insert": "Read rows from "
+        },
+        {
+          "insert": "History",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": "."
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-for-each-row-build-the-13": {
+      "id": "b-10-folder-export-for-each-row-build-the-13",
+      "type": "list-item",
+      "props": {
+        "ordered": true
+      },
+      "text": [
+        {
+          "insert": "For each row, build the record path from timestamp and "
+        },
+        {
+          "insert": "transcriptEntityId",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": "."
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-write-the-record-directo-14": {
+      "id": "b-10-folder-export-write-the-record-directo-14",
+      "type": "list-item",
+      "props": {
+        "ordered": true
+      },
+      "text": [
+        {
+          "insert": "Write the record directory:"
+        }
+      ],
+      "children": [
+        "b-10-folder-export-metadata-json-15",
+        "b-10-folder-export-raw-transcript-txt-whe-16",
+        "b-10-folder-export-formatted-transcript-tx-17",
+        "b-10-folder-export-audio-wav-when-audio-e-18",
+        "b-10-folder-export-screenshot-png-when-sc-19"
+      ]
+    },
+    "b-10-folder-export-metadata-json-15": {
+      "id": "b-10-folder-export-metadata-json-15",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "metadata.json",
+          "attributes": {
+            "code": true
+          }
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-raw-transcript-txt-whe-16": {
+      "id": "b-10-folder-export-raw-transcript-txt-whe-16",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "raw_transcript.txt",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " when "
+        },
+        {
+          "insert": "asrText",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " exists"
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-formatted-transcript-tx-17": {
+      "id": "b-10-folder-export-formatted-transcript-tx-17",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "formatted_transcript.txt",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " when "
+        },
+        {
+          "insert": "formattedText",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " exists"
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-audio-wav-when-audio-e-18": {
+      "id": "b-10-folder-export-audio-wav-when-audio-e-18",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "audio.wav",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " when audio exists"
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-screenshot-png-when-sc-19": {
+      "id": "b-10-folder-export-screenshot-png-when-sc-19",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "screenshot.png",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " when screenshots are enabled and a screenshot exists"
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-add-previously-exported-20": {
+      "id": "b-10-folder-export-add-previously-exported-20",
+      "type": "list-item",
+      "props": {
+        "ordered": true
+      },
+      "text": [
+        {
+          "insert": "Add previously exported records that are now missing from the source to "
+        },
+        {
+          "insert": "indexes/history.jsonl",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " as retained archive rows."
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-write-indexes-history-j-21": {
+      "id": "b-10-folder-export-write-indexes-history-j-21",
+      "type": "list-item",
+      "props": {
+        "ordered": true
+      },
+      "text": [
+        {
+          "insert": "Write "
+        },
+        {
+          "insert": "indexes/history.jsonl",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": "."
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-regenerate-indexes-dict-22": {
+      "id": "b-10-folder-export-regenerate-indexes-dict-22",
+      "type": "list-item",
+      "props": {
+        "ordered": true
+      },
+      "text": [
+        {
+          "insert": "Regenerate "
+        },
+        {
+          "insert": "indexes/dictionary.jsonl",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": "."
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-write-manifest-json-23": {
+      "id": "b-10-folder-export-write-manifest-json-23",
+      "type": "list-item",
+      "props": {
+        "ordered": true
+      },
+      "text": [
+        {
+          "insert": "Write "
+        },
+        {
+          "insert": "manifest.json",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": "."
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-prune-older-repo-local-s-24": {
+      "id": "b-10-folder-export-prune-older-repo-local-s-24",
+      "type": "list-item",
+      "props": {
+        "ordered": true
+      },
+      "text": [
+        {
+          "insert": "Prune older repo-local source snapshots, keeping the latest successful backup."
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-write-a-run-report-under-25": {
+      "id": "b-10-folder-export-write-a-run-report-under-25",
+      "type": "list-item",
+      "props": {
+        "ordered": true
+      },
+      "text": [
+        {
+          "insert": "Write a run report under "
+        },
+        {
+          "insert": "runs/",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " and append a summary to "
+        },
+        {
+          "insert": "indexes/runs.jsonl",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": "."
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-record-identity-26": {
+      "id": "b-10-folder-export-record-identity-26",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Record Identity"
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-the-record-id-is-27": {
+      "id": "b-10-folder-export-the-record-id-is-27",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The record ID is:"
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-text-28": {
+      "id": "b-10-folder-export-text-28",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": "History.transcriptEntityId"
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-the-timestamp-only-organ-29": {
+      "id": "b-10-folder-export-the-timestamp-only-organ-29",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The timestamp only organizes the folder path:"
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-text-30": {
+      "id": "b-10-folder-export-text-30",
+      "type": "code",
+      "props": {
+        "language": "text"
+      },
+      "text": [
+        {
+          "insert": "records/YYYY/MM/DD/{timestamp_compact_utc}_{transcriptEntityId}/"
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-if-the-same-transcripte-31": {
+      "id": "b-10-folder-export-if-the-same-transcripte-31",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "If the same "
+        },
+        {
+          "insert": "transcriptEntityId",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " appears on a later run, WisprSync treats it as the same record."
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-repeat-runs-32": {
+      "id": "b-10-folder-export-repeat-runs-32",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Repeat Runs"
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-on-repeat-export-33": {
+      "id": "b-10-folder-export-on-repeat-export-33",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "On repeat export:"
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-missing-exported-record-34": {
+      "id": "b-10-folder-export-missing-exported-record-34",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "missing exported record: create it,"
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-same-id-and-same-source-35": {
+      "id": "b-10-folder-export-same-id-and-same-source-35",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "same ID and same source hash: leave it alone,"
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-same-id-and-changed-sour-36": {
+      "id": "b-10-folder-export-same-id-and-changed-sour-36",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "same ID and changed source hash: replace the record files,"
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-same-id-but-timestamp-pa-37": {
+      "id": "b-10-folder-export-same-id-but-timestamp-pa-37",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "same ID but timestamp path changed: move the record after confirming the existing "
+        },
+        {
+          "insert": "metadata.json",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " has the same ID,"
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-exported-id-missing-from-38": {
+      "id": "b-10-folder-export-exported-id-missing-from-38",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "exported ID missing from the source database: keep the record directory, report it in the run report, and keep it in "
+        },
+        {
+          "insert": "indexes/history.jsonl",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " with "
+        },
+        {
+          "insert": "source_status: \"missing_from_source\"",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": "."
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-hashes-39": {
+      "id": "b-10-folder-export-hashes-39",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Hashes"
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-hashes-are-only-there-to-40": {
+      "id": "b-10-folder-export-hashes-are-only-there-to-40",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "Hashes are only there to make repeat exports practical and check the files that were written."
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-hashes-table": {
+      "id": "b-10-folder-export-hashes-table",
+      "type": "structured-table",
+      "props": {
+        "columns": [
+          "Hash",
+          "Meaning"
+        ],
+        "rows": [
+          [
+            [
+              {
+                "insert": "source_row_sha256",
+                "attributes": {
+                  "code": true
+                }
+              }
+            ],
+            "Fingerprint of the exported source row content. Used to decide whether a record changed."
+          ],
+          [
+            [
+              {
+                "insert": "record_content_sha256",
+                "attributes": {
+                  "code": true
+                }
+              }
+            ],
+            "Fingerprint of the exported metadata plus generated file hashes. Used to validate the written record."
+          ],
+          [
+            [
+              {
+                "insert": "audio_sha256",
+                "attributes": {
+                  "code": true
+                }
+              }
+            ],
+            "Fingerprint of exported audio bytes."
+          ],
+          [
+            [
+              {
+                "insert": "screenshot_sha256",
+                "attributes": {
+                  "code": true
+                }
+              }
+            ],
+            "Fingerprint of exported screenshot bytes."
+          ]
+        ],
+        "title": "Export hashes"
+      },
+      "children": []
+    },
+    "b-10-folder-export-exported-at-utc-is-exc-42": {
+      "id": "b-10-folder-export-exported-at-utc-is-exc-42",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "exported_at_utc",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " is excluded from "
+        },
+        {
+          "insert": "source_row_sha256",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " so an unchanged Wispr Flow row has the same hash across runs."
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-safety-checks-43": {
+      "id": "b-10-folder-export-safety-checks-43",
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "text": [
+        {
+          "insert": "Safety Checks"
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-the-exporter-should-stop-44": {
+      "id": "b-10-folder-export-the-exporter-should-stop-44",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "The exporter should stop instead of guessing if it sees an unsafe state:"
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-output-paths-that-overla-45": {
+      "id": "b-10-folder-export-output-paths-that-overla-45",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "output paths that overlap the source database, Wispr Flow app data, the WisprSync repo root, or WisprSync private state directories,"
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-duplicate-transcriptent-47": {
+      "id": "b-10-folder-export-duplicate-transcriptent-47",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "duplicate "
+        },
+        {
+          "insert": "transcriptEntityId",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " values in the source,"
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-two-source-rows-resolvin-48": {
+      "id": "b-10-folder-export-two-source-rows-resolvin-48",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "two source rows resolving to the same record path,"
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-an-existing-record-path-49": {
+      "id": "b-10-folder-export-an-existing-record-path-49",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "an existing record path whose "
+        },
+        {
+          "insert": "metadata.json",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " contains a different ID,"
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-duplicate-ids-in-indexe-50": {
+      "id": "b-10-folder-export-duplicate-ids-in-indexe-50",
+      "type": "list-item",
+      "props": {
+        "ordered": false
+      },
+      "text": [
+        {
+          "insert": "duplicate IDs in "
+        },
+        {
+          "insert": "indexes/history.jsonl",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": "."
+        }
+      ],
+      "children": []
+    },
+    "b-10-folder-export-these-are-hard-failures-51": {
+      "id": "b-10-folder-export-these-are-hard-failures-51",
+      "type": "paragraph",
+      "props": {},
+      "text": [
+        {
+          "insert": "These are hard failures because choosing a winner could corrupt the exported data. Interactive setup may allow an output directory inside the WisprSync repository after a warning and explicit confirmation, but the repo root itself and private "
+        },
+        {
+          "insert": ".wisprsync/",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " and "
+        },
+        {
+          "insert": ".wisprsync-cache/",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " directories remain blocked. Expert users can pass "
+        },
+        {
+          "insert": "--allow-unsafe-output",
+          "attributes": {
+            "code": true
+          }
+        },
+        {
+          "insert": " to intentionally use an unsafe-looking output location in scripted workflows, except when the output path is already a file."
+        }
+      ],
+      "children": []
+    }
+  }
+}
