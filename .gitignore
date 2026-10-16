@@ -36,3 +36,7 @@ Crashpad/
 .wisprsync-cache/
 .wisprsync/
 tmp/
+
+# Derived Codecaine docs state (rebuildable)
+docs/.index/
+docs/.changesets/

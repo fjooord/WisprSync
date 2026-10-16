@@ -26,7 +26,7 @@ The goal is data ownership
 
 If the data is on your machine, you should be able to inspect it, back it up, analyze it, and move it into whatever workflow you prefer.
 
-The longer project backstory is in [docs/00-foundation/10-backstory.md](docs/00-foundation/10-backstory.md).
+The longer project backstory is in [docs/00-foundation/10-backstory/](docs/00-foundation/10-backstory/).
 
 ## Export Modes
 
@@ -143,15 +143,15 @@ Files are omitted when the source row does not contain the corresponding value.
 
 ## Documentation
 
-Start at [docs/00-overview.md](docs/00-overview.md).
+Start at [docs/05-overview/](docs/05-overview/).
 
 Key docs:
 
-- [Backstory](docs/00-foundation/10-backstory.md)
-- [Wispr Flow Source Shape](docs/10-system-design/10-data-structure/10-wispr-flow-source-shape.md)
-- [WisprSync Output Shape](docs/10-system-design/10-data-structure/20-wisprsync-output-shape.md)
-- [Folder Export](docs/10-system-design/20-exporting/10-folder-export.md)
-- [Setup Workflow](docs/20-implementation/99-appendix/10-setup-workflow.md)
+- [Backstory](docs/00-foundation/10-backstory/)
+- [Wispr Flow Source Shape](docs/10-system-design/10-data-structure/10-wispr-flow-source-shape/)
+- [WisprSync Output Shape](docs/10-system-design/10-data-structure/20-wisprsync-output-shape/)
+- [Folder Export](docs/10-system-design/20-exporting/10-folder-export/)
+- [Setup Workflow](docs/20-implementation/99-appendix/10-setup-workflow/)
 
 ## License
 
